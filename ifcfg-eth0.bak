@@ -1,0 +1,7 @@
+DEVICE="em1"
+BOOTPROTO="none"
+ONBOOT="no"
+TYPE="Ethernet"
+USERCTL="yes"
+PEERDNS="yes"
+
