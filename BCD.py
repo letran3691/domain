@@ -4,7 +4,7 @@ import os,time,subprocess,fileinput
 
 
 ip = input('Enter ip server: ')
-print('Example Engter Netmask: 8 16 24 31')
+print('Example Engter Netmask: 8 16 24')
 netmask = input('Enter Netmask: ')
 
 gw = os.popen("ip route |grep default | awk '{print $3}'").read()
