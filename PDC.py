@@ -1,3 +1,5 @@
+#!/usr/bin/python3.6
+
 import os,time,subprocess,fileinput
 #os.system('systemctl stop firewalld')
 #os.system('systemctl disable firewalld')
@@ -58,6 +60,45 @@ os.system('/usr/local/samba/bin/samba-tool domain provision --use-rfc2307 --inte
 os.system('cp samba.service /etc/systemd/system/samba.service')
 
 os.system('systemctl enable samba && systemctl start samba')
+
+os.system('yum -y install tdb-tools')
+
+### backup file idmap.ldb
+
+os.system('tdbbackup -s .bak /usr/local/samba/private/idmap.ldb')
+
+### copy file imap.ldb.bak to DC2
+
+domain = input('Enter domain name : ')
+
+os.system('scp -r /usr/local/samba/private/idmap.ldb.bak root@dc2.'+domain+':/var/lib/samba/private/idmap.ldb ')
+
+
+# with open('/etc/resolv.conf','a+') as f3:
+#     f3.write('search '+ domain )
+#     f3.write('nameserver '+ ip)
+#     f3.close()
+
+
+
+### remove file krb5.conf
+# os.system('rm -f /etc/krb5.conf')
+#
+# os.system('cp krb5.conf /etc/krb5.conf ')
+
+with fileinput.FileInput('krb5.conf', inplace=True, backup='.bak') as f4:
+    for line in f4:
+
+        print(line.replace('default_realm = SUNIL.CC', 'default_realm = '+ domain.upper()))
+
+    f4.close()
+
+#### Checking the Kerberos ticket
+
+os.system('kinit administrator@'+domain.upper())
+os.system('klist')
+
+os.system('/usr/local/samba/bin/samba-tool drs showrepl')
 
 print('install and config done!!!! reboot after 5s')
 time.sleep(5)
