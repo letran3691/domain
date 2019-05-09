@@ -22,8 +22,6 @@ cd Python-3.6.8
 ./configure --enable-optimizations
 make altinstall
 
-python3 -m pip install whatever
-
 echo 'install done!!!'
 
 rm -f /usr/src/Python-3.6.8.tgz

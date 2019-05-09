@@ -16,13 +16,13 @@ with fileinput.FileInput('/etc/selinux/config', inplace=True,backup='.bak') as  
 os.system("echo 'dc1' > hostname")
 
 ip = input('enter ip PDC: ')
-print('Example host : dc1.domain.local dc1')
+print('Example host : domain.local')
 host = input('Enter host: ')
 
-a = os.system('find / -name hosts')
+a = os.popen('find / -name hosts').read
 with open(a,'a+') as f:
 
-   f.write('\n'+ ip +' '+ host)
+   f.write('\n'+ ip +' '+ 'dc1'+ host +' dc1')
    f.close()
 
 ##### install epel-release
