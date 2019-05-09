@@ -1,6 +1,6 @@
 #!/usr/bin/python3.6
 
-import os,time,subprocess,fileinput
+import os,time,subprocess,fileinput,sys
 
 os.system('systemctl stop firewalld')
 os.system('systemctl disable firewalld')
@@ -19,18 +19,23 @@ ip = input('enter ip PDC: ')
 print('Example hostname : dc1.domain.local dc1')
 host = input('Enter hostname: ')
 
-with open('hosts','a+') as f:
+a = os.system('find / -name hosts')
+with open(a,'a+') as f:
 
    f.write('\n'+ ip +' '+ host)
    f.close()
 
 ##### install epel-release
 
-os.system('yum install epel-release –y && yum update')
+os.system('yum -y install epel-release && yum update -y')
 
 #### install packets need for samba4
 
-os.system('yum install perl gcc libacl-devel libblkid-devel gnutls-devel readline-devel python-devel gdb pkgconfig krb5-workstation zlib-devel setroubleshoot-server libaio-devel setroubleshoot-plugins policycoreutils-python libsemanage-python setools-libs-python setools-libs popt-devel libpcap-devel sqlite-devel libidn-devel libxml2-devel libacl-devel libsepol-devel libattr-devel keyutils-libs-devel cyrus-sasl-devel cups-devel bind-utils libxslt docbook-style-xsl openldap-devel pam-devel bzip2 vim wget -y')
+print('install packets need for samba4')
+
+time.sleep(3)
+
+os.system('yum -y install perl gcc libacl-devel libblkid-devel gnutls-devel readline-devel python-devel gdb pkgconfig krb5-workstation zlib-devel setroubleshoot-server libaio-devel setroubleshoot-plugins policycoreutils-python libsemanage-python setools-libs-python setools-libs popt-devel libpcap-devel sqlite-devel libidn-devel libxml2-devel libacl-devel libsepol-devel libattr-devel keyutils-libs-devel cyrus-sasl-devel cups-devel bind-utils libxslt docbook-style-xsl openldap-devel pam-devel bzip2 wget')
 
 #### dowload samba4
 
@@ -40,6 +45,8 @@ os.system('wget https://download.samba.org/pub/samba/stable/samba-4.6.0.tar.gz')
 
 os.system('tar -zxvf samba-4.6.0.tar.gz && cd samba-4.6.0')
 
+print(os.system('pwd'))
+time.sleep(5)
 #### buil
 
 os.system('./configure --enable-debug --enable-selftest --with-ads --with-systemd --with-winbind')
@@ -69,6 +76,9 @@ os.system('yum -y install tdb-tools')
 ### backup file idmap.ldb
 
 os.system('tdbbackup -s .bak /usr/local/samba/private/idmap.ldb')
+
+
+######################################################################################################################
 
 ### copy file imap.ldb.bak to DC2
 
