@@ -47,9 +47,9 @@ os.system('tar -zxvf samba-4.6.0.tar.gz')
 
 time.sleep(5)
 ### buil
-os.system('cd /root/samba-4.6.0')
-print(subprocess.call('pwd'))
-#os.system('./configure --enable-debug --enable-selftest --with-ads --with-systemd --with-winbind')
+
+
+os.system(' cd /root/samba-4.6.0 && ./configure --enable-debug --enable-selftest --with-ads --with-systemd --with-winbind')
 
 
 ##### install
@@ -83,17 +83,17 @@ os.system('tdbbackup -s .bak /usr/local/samba/private/idmap.ldb')
 
 ### copy file imap.ldb.bak to DC2
 
-domain = input('Enter domain name : ')
-
-os.system('scp -r /usr/local/samba/private/idmap.ldb.bak root@dc2.'+domain+':/var/lib/samba/private/idmap.ldb ')
-
-
-with open('/etc/resolv.conf','a+') as f3:
-    f3.write('search '+ domain )
-    f3.write('nameserver '+ ip)
-    f3.close()
-
-
+# domain = input('Enter domain name : ')
+#
+# os.system('scp -r /usr/local/samba/private/idmap.ldb.bak root@dc2.'+domain+':/var/lib/samba/private/idmap.ldb ')
+#
+#
+# with open('/etc/resolv.conf','a+') as f3:
+#     f3.write('search '+ domain )
+#     f3.write('nameserver '+ ip)
+#     f3.close()
+#
+#
 
 ## remove file krb5.conf
 # os.system('rm -f /etc/krb5.conf')
