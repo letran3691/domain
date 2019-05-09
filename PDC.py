@@ -5,8 +5,6 @@ import os,time,subprocess,fileinput,sys
 os.system('systemctl stop firewalld')
 os.system('systemctl disable firewalld')
 
-
-
 with fileinput.FileInput('/etc/selinux/config', inplace=True,backup='.bak') as  f1:
 
     for line in f1:
@@ -16,6 +14,9 @@ with fileinput.FileInput('/etc/selinux/config', inplace=True,backup='.bak') as  
 os.system("echo 'dc1' > /etc/hostname")
 
 ip = input('enter ip PDC: ')
+print('Example Enter Netmask: 8 16 24')
+netmask = input('Enter Netmask: ')
+
 print('Example host : domain.local')
 host = input('Enter host: ')
 
@@ -24,13 +25,112 @@ with open('/etc/hosts','a+') as f:
    f.write('\n'+ ip +' '+ 'dc1.'+ host +' dc1')
    f.close()
 
+
+gw = os.popen("ip route |grep default | awk '{print $3}'").read()
+
+################################## config network interface
+def eno():
+    a = os.path.exists('/sys/class/net/eno1')
+
+    return a
+def eth():
+    a = os.path.exists('/sys/class/net/eth0')
+    return a
+
+def em():
+    a = os.path.exists('/sys/class/net/em1')
+    return a
+def ens():
+    a = os.path.exists('/sys/class/net/ens33')
+    return a
+
+eno_ = eno()
+#print(bool(eno_))
+
+eth_ = eth()
+#print(bool(eth_))
+
+em_ = em()
+#print(bool(em_))
+
+ens_ = ens()
+#print(bool(ens_))
+
+if bool(eth_) == True:
+    a = os.system('find / -name ifcfg-eth0')
+    with fileinput.FileInput(a, inplace=True, backup='.bak') as  f:
+        for line in f:
+            # print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
+            print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+        f.close()
+    with open(a, 'a+') as f1:
+        f1.write('\nIPADDR=' + ip)
+        f1.write('\nFREFIX=' + netmask)
+        f1.write('\nGATEWAY=' + gw)
+        f1.write('\nDNS1=' + ip)
+        f1.write('\nDNS2=8.8.8.8')
+        f1.close()
+
+elif bool(eno_) == True:
+
+    a = os.system('find / -name ifcfg-eno1')
+    with fileinput.FileInput(a, inplace=True, backup='.bak') as  f:
+        for line in f:
+            #print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
+            print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+        f.close()
+    with open(a,'a+') as f1:
+        f1.write('\nIPADDR='+ip)
+        f1.write('\nFREFIX='+netmask)
+        f1.write('\nGATEWAY='+gw)
+        f1.write('\nDNS1='+ ip)
+        f1.write('\nDNS2=8.8.8.8')
+        f1.close()
+
+elif bool(em_ )== True:
+
+    a = os.system('find / -name ifcfg-em1')
+    with fileinput.FileInput(a, inplace=True, backup='.bak') as  f:
+        for line in f:
+            # print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
+            print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+        f.close()
+    with open(a, 'a+') as f1:
+        f1.write('\nIPADDR=' + ip)
+        f1.write('\nFREFIX=' + netmask)
+        f1.write('\nGATEWAY=' + gw)
+        f1.write('\nDNS1=' + ip)
+        f1.write('\nDNS2=8.8.8.8')
+        f1.close()
+
+elif bool(ens_ )== True:
+
+    a = os.system('find / -name ifcfg-ens33')
+
+    with fileinput.FileInput( a, inplace=True, backup='.bak') as  f:
+        for line in f:
+            # print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
+            print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+        f.close()
+    with open(a, 'a+') as f1:
+        f1.write('\nIPADDR=' + ip)
+        f1.write('\nFREFIX=' + netmask)
+        f1.write('\nGATEWAY=' + gw)
+        f1.write('\nDNS1=' + ip)
+        f1.write('\nDNS2=8.8.8.8')
+        f1.close()
+
+else:
+    print("dont't have interface")
+
+
 ##### install epel-release
 
 #os.system('yum -y install epel-release && yum update -y')
 
 #### install packets need for samba4
 
-print('install packets need for samba4')
+print('\ninstall packets need for samba4')
 
 time.sleep(3)
 
@@ -44,17 +144,20 @@ os.system('wget https://download.samba.org/pub/samba/stable/samba-4.6.0.tar.gz')
 
 os.system('tar -zxvf samba-4.6.0.tar.gz')
 
-
-time.sleep(5)
 ### buil
 
-
-os.system(' cd /root/samba-4.6.0 && ./configure --enable-debug --enable-selftest --with-ads --with-systemd --with-winbind')
+print('\ncompile')
+time.sleep(3)
+os.system('cd /root/samba-4.6.0 && ./configure --enable-debug --enable-selftest --with-ads --with-systemd --with-winbind')
 
 
 ##### install
 
-os.system('make && make install')
+print('\ninstall')
+
+time.sleep(3)
+
+os.system('cd /root/samba-4.6.0 && make && make install')
 
 ##### Edit file  /etc/krb5.conf
 
@@ -77,6 +180,7 @@ os.system('yum -y install tdb-tools')
 ### backup file idmap.ldb
 
 os.system('tdbbackup -s .bak /usr/local/samba/private/idmap.ldb')
+
 
 
 ######################################################################################################################
@@ -114,5 +218,5 @@ os.system('tdbbackup -s .bak /usr/local/samba/private/idmap.ldb')
 #
 # os.system('/usr/local/samba/bin/samba-tool drs showrepl')
 
-# print('install and config done!!!! reboot after 5s')
-# time.sleep(5)
+print('install and config done!!!! reboot after 5s')
+time.sleep(5)
