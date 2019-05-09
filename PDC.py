@@ -5,7 +5,9 @@ import os,time,subprocess,fileinput
 os.system('systemctl stop firewalld')
 os.system('systemctl disable firewalld')
 
-with fileinput.FileInput('config', inplace=True,backup='.bak') as  f1:
+
+
+with fileinput.FileInput('/etc/selinux/config', inplace=True,backup='.bak') as  f1:
 
     for line in f1:
        print(line.replace('SELINUX=enforcing','SELINUX=disabled'),end='')
@@ -36,7 +38,7 @@ os.system('wget https://download.samba.org/pub/samba/stable/samba-4.6.0.tar.gz')
 
 ### extract
 
-os.system('./tar -zxvf samba-4.6.0.tar.gz && cd samba-4.6.0')
+os.system('tar -zxvf samba-4.6.0.tar.gz && cd samba-4.6.0')
 
 #### buil
 
@@ -48,7 +50,7 @@ os.system('make && make install')
 
 ##### Edit file  /etc/krb5.conf
 
-with fileinput.FileInput('config', inplace=True,backup='.bak') as  f2:
+with fileinput.FileInput('/etc/krb5.conf', inplace=True,backup='.bak') as  f2:
 
     for line in f2:
        print(line.replace('includedir /etc/krb5.conf.d/','#includedir /etc/krb5.conf.d/'),end='')
@@ -58,7 +60,7 @@ with fileinput.FileInput('config', inplace=True,backup='.bak') as  f2:
 
 os.system('/usr/local/samba/bin/samba-tool domain provision --use-rfc2307 --interactive')
 
-os.system('cp samba.service /etc/systemd/system/samba.service')
+os.system('cp ./samba.service /etc/systemd/system/samba.service')
 
 os.system('systemctl enable samba && systemctl start samba')
 
