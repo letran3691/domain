@@ -26,7 +26,7 @@ with open('/etc/hosts','a+') as f:
 
 ##### install epel-release
 
-os.system('yum -y install epel-release && yum update -y')
+#os.system('yum -y install epel-release && yum update -y')
 
 #### install packets need for samba4
 
@@ -68,7 +68,7 @@ with fileinput.FileInput('/etc/krb5.conf', inplace=True,backup='.bak') as  f2:
 
 os.system('/usr/local/samba/bin/samba-tool domain provision --use-rfc2307 --interactive')
 
-os.system('cp ./samba.service /etc/systemd/system/samba.service')
+os.system('cp domain/samba.service /etc/systemd/system/samba.service')
 
 os.system('systemctl enable samba && systemctl start samba')
 
