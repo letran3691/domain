@@ -47,9 +47,10 @@ os.system('tar -zxvf samba-4.6.0.tar.gz')
 
 time.sleep(5)
 ### buil
-os.system('cd samba-4.6.0')
+os.system('cd /root/samba-4.6.0')
+print(subprocess.call('pwd'))
+#os.system('./configure --enable-debug --enable-selftest --with-ads --with-systemd --with-winbind')
 
-os.system('./configure --enable-debug --enable-selftest --with-ads --with-systemd --with-winbind')
 
 ##### install
 
