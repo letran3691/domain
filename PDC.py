@@ -36,7 +36,7 @@ os.system('wget https://download.samba.org/pub/samba/stable/samba-4.6.0.tar.gz')
 
 ### extract
 
-os.system('tar -zxvf samba-4.6.0.tar.gz && cd samba-4.6.0')
+os.system('./tar -zxvf samba-4.6.0.tar.gz && cd samba-4.6.0')
 
 #### buil
 
