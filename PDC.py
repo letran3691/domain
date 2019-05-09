@@ -57,13 +57,13 @@ ens_ = ens()
 #print(bool(ens_))
 
 if bool(eth_) == True:
-    a = os.system('find / -name ifcfg-eth0')
-    with fileinput.FileInput(a, inplace=True, backup='.bak') as  f:
+
+    with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-eth0', inplace=True, backup='.bak') as  f:
         for line in f:
             # print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
             print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
-    with open(a, 'a+') as f1:
+    with open('/etc/sysconfig/network-scripts/ifcfg-eth0', 'a+') as f1:
         f1.write('\nIPADDR=' + ip)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
@@ -119,6 +119,9 @@ elif bool(ens_ )== True:
 else:
     print("dont't have interface")
 
+#### restart network
+
+os.system('systemctl restart network')
 
 ##### install epel-release
 
@@ -142,14 +145,14 @@ os.system('tar -zxvf samba-4.6.0.tar.gz')
 
 ### buil
 
-print('\ncompile')
+print('\n Begin compile')
 time.sleep(3)
 os.system('cd /root/samba-4.6.0 && ./configure --enable-debug --enable-selftest --with-ads --with-systemd --with-winbind')
 
 
 ##### install
 
-print('\ninstall')
+print('\nBegin install')
 
 time.sleep(3)
 
