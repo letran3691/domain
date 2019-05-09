@@ -16,8 +16,8 @@ with fileinput.FileInput('/etc/selinux/config', inplace=True,backup='.bak') as  
 os.system("echo 'dc1' > hostname")
 
 ip = input('enter ip PDC: ')
-print('Example hostname : dc1.domain.local dc1')
-host = input('Enter hostname: ')
+print('Example host : dc1.domain.local dc1')
+host = input('Enter host: ')
 
 a = os.system('find / -name hosts')
 with open(a,'a+') as f:
