@@ -25,10 +25,10 @@ with open('/etc/hosts','a+') as f:
    f.write('\n'+ ip +' '+ 'dc1.'+ host +' dc1')
    f.close()
 
-
 gw = os.popen("ip route |grep default | awk '{print $3}'").read()
 
 ################################## config network interface
+
 def eno():
     a = os.path.exists('/sys/class/net/eno1')
 
@@ -73,13 +73,12 @@ if bool(eth_) == True:
 
 elif bool(eno_) == True:
 
-    a = os.system('find / -name ifcfg-eno1')
-    with fileinput.FileInput(a, inplace=True, backup='.bak') as  f:
+    with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-eno1', inplace=True, backup='.bak') as  f:
         for line in f:
             #print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
             print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
-    with open(a,'a+') as f1:
+    with open('/etc/sysconfig/network-scripts/ifcfg-eno1','a+') as f1:
         f1.write('\nIPADDR='+ip)
         f1.write('\nFREFIX='+netmask)
         f1.write('\nGATEWAY='+gw)
@@ -89,13 +88,12 @@ elif bool(eno_) == True:
 
 elif bool(em_ )== True:
 
-    a = os.system('find / -name ifcfg-em1')
-    with fileinput.FileInput(a, inplace=True, backup='.bak') as  f:
+    with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-em1', inplace=True, backup='.bak') as  f:
         for line in f:
             # print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
             print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
-    with open(a, 'a+') as f1:
+    with open('/etc/sysconfig/network-scripts/ifcfg-em1', 'a+') as f1:
         f1.write('\nIPADDR=' + ip)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
@@ -105,14 +103,12 @@ elif bool(em_ )== True:
 
 elif bool(ens_ )== True:
 
-    a = os.system('find / -name ifcfg-ens33')
-
-    with fileinput.FileInput( a, inplace=True, backup='.bak') as  f:
+    with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-ens33', inplace=True, backup='.bak') as  f:
         for line in f:
             # print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
             print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
-    with open(a, 'a+') as f1:
+    with open('/etc/sysconfig/network-scripts/ifcfg-ens33', 'a+') as f1:
         f1.write('\nIPADDR=' + ip)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
