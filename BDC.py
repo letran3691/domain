@@ -2,9 +2,6 @@
 
 import os,time,subprocess,fileinput
 
-os.system('systemctl stop firewalld')
-os.system('systemctl disable firewalld')
-
 ip_dc2 = input('Enter ip dc2 : ')
 print('Example Engter Netmask: 8 16 24')
 netmask = input('Enter Netmask : ')
@@ -12,12 +9,20 @@ netmask = input('Enter Netmask : ')
 print('Example domain : domain.local')
 domain = input('Enter domain : ')
 
+############ tach chuoi
+
+a = domain.split('.')[0]
+
+exit(0)
 ip_dc1 = input('Enter ip dc1 : ')
+host_pdc = print('Enter hostname PDC: ')
+
+host_n = os.popen('cat /etc/hostname')
 
 with open('/etc/hosts','a+') as f:
 
-   f.write('\n'+ ip_dc2 +' '+ 'dc2.'+ domain +' dc2')
-   f.write('\n' + ip_dc1 + ' ' + 'dc1.' + domain + ' dc1')
+   f.write('\n'+ ip_dc2 +' '+host_n+'.'+ domain +' '+host_n)
+   f.write('\n' + ip_dc1 + ' ' + host_pdc+'.' + domain + ' '+host_pdc)
    f.close()
 
 gw = os.popen("ip route |grep default | awk '{print $3}'").read()
@@ -190,7 +195,7 @@ print('copy file')
 
 time.sleep(3)
 
-os.system('scp /etc/hosts root@dc1.'+domain+':/etc/')
+os.system('scp /etc/hosts root@'+host_pdc+'.'+domain+':/etc/')
 
 
 ## remove file created when install samba
@@ -209,7 +214,7 @@ with open('/etc/krb5.conf','a+') as f3:
     f3.write('\n    default_realm = '+domain.upper())
     f3.close()
 
-##### get the kerberos key from DC1
+##### get the kerberos key from PDC
 
 os.system('kinit administrator@'+domain.upper())
 os.system('klist')
@@ -218,14 +223,14 @@ os.system('klist')
 ###add the server to the existing domain
 
 
-os.system('samba-tool domain join '+domain+'  DC -U"'+domain+'\/administrator" --dns-backend=SAMBA_INTERNAL')
+os.system('samba-tool domain join '+domain+'  DC -U"'+a+'\/administrator" --dns-backend=SAMBA_INTERNAL')
 
 ### create samba service
 os.system('cp domain/samba.service /etc/systemd/system/samba.service')
 
 ####################################################################
 
-print('switch DC1 press Enter')
+print('switch PDC press Enter')
 
 time.sleep(60)
 
@@ -237,7 +242,11 @@ os.system('systemctl enable samba &&  systemctl start samba')
 
 ##################################################################
 
-print('switch DC1 press Enter')
+os.system('scp /etc/krb5.conf root@'+host_pdc+'.'+domain+':/etc/ ')
+
+###################################################################
+
+print('switch PDC press Enter')
 
 time.sleep(30)
 
@@ -249,7 +258,7 @@ os.system('samba-tool drs showrepl')
 
 ###################################################################
 
-print('switch DC1 press Enter')
+print('switch PDC press Enter')
 
 time.sleep(30)
 

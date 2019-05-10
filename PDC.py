@@ -11,11 +11,13 @@ with fileinput.FileInput('/etc/selinux/config', inplace=True,backup='.bak') as  
        print(line.replace('SELINUX=enforcing','SELINUX=disabled'),end='')
     f1.close()
 
-os.system("echo 'dc1' > /etc/hostname")
+host_bdc = print('Enter hostname BDC: ')
 
 ip = input('enter ip PDC: ')
 print('Example Enter Netmask: 8 16 24')
 netmask = input('Enter Netmask: ')
+
+host_n = os.popen('cat /etc/hostname')
 
 # print('Example host : domain.local')
 # host = input('Enter host: ')
@@ -24,7 +26,7 @@ domain = input('Enter domain name : ')
 
 with open('/etc/hosts','a+') as f:
 
-   f.write('\n'+ ip +' '+ 'dc1.'+ domain +' dc1')
+   f.write('\n'+ ip +' '+ host_n+ '.'+ domain +' '+host_n)
    f.close()
 
 gw = os.popen("ip route |grep default | awk '{print $3}'").read()
@@ -187,12 +189,12 @@ os.system('/usr/local/samba/bin/samba-tool domain provision --use-rfc2307 --inte
 
 os.system('cp domain/samba.service /etc/systemd/system/samba.service')
 
-os.system('cp /usr/local/samba/bin/samba-tool /usr/sbin')
+os.system('cp /usr/local/samba/bin/samba-tool /usr/sbin/')
 
 os.system('systemctl enable samba && systemctl start samba')
 
 
-print('switch DC2 to install')
+print('switch BDC to install')
 
 time.sleep(30)
 
@@ -211,11 +213,14 @@ os.system('tdbbackup -s .bak /usr/local/samba/private/idmap.ldb')
 ### copy file imap.ldb.bak to DC2
 
 
-os.system('scp -r /usr/local/samba/private/idmap.ldb.bak root@dc2.'+domain+':/var/lib/samba/private/idmap.ldb ')
+os.system('scp -r /usr/local/samba/private/idmap.ldb.bak root@'+host_bdc+'.'+domain+':/var/lib/samba/private/idmap.ldb ')
 
 ############################################################################
+## remove file krb5.conf
 
-print('switch DC2 press Enter')
+os.system('rm -f /etc/krb5.conf')
+
+print('switch BDC press Enter')
 
 time.sleep(30)
 
@@ -227,12 +232,6 @@ with open('/etc/resolv.conf','a+') as f3:
     f3.write('search '+ domain )
     f3.write('nameserver '+ ip)
     f3.close()
-
-
-
-## remove file krb5.conf
-
-os.system('rm -f /etc/krb5.conf')
 
 # os.system('cd domain && cp krb5.conf /etc/ ')
 #
@@ -250,7 +249,7 @@ os.system('klist')
 
 ###################################################################################
 
-print('switch DC2 press Enter')
+print('switch BDC press Enter')
 
 time.sleep(30)
 

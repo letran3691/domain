@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+echo 'disable firewalld'
+sleep 3
+systemctl stop firewalld
+systemctl disable firewalld
+
 
 ## installation required GCC
 echo 'installation required GCC'
@@ -32,9 +37,10 @@ echo 'python3.6 -V'
 
 chmod -R +x /root/domain/*.py
 
-read -s -p "Enter Servername: " servername
+echo "Enter Servername: "
+read server
 
-echo $servername > /etc/hostname
+echo $server > /etc/hostname
 
 echo 'install done!!! and reboot after 5s'
 
