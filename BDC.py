@@ -128,19 +128,52 @@ time.sleep(7)
 
 #### install packet basic
 
-os.system('yum -y install wget authconfig krb5-workstation')
+os.system('yum groups -y install "Development Tools" ')
+os.system('yum -y install iniparser libldb libtalloc libtdb libtevent python-devel gnutls-devel libacl-devel openldap-devel pam-devel readline-devel krb5-devel cups-devel')
 
-##### install repo samba4
 
-#os.system('cd  /etc/yum.repos.d/')
+###### dowload samba4
 
-os.system(' cd domain/EL7.wing.repo /etc/yum.repos.d')
-os.system("sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/EL7.wing.repo")
-os.system('yum clean all')
+os.system('wget https://download.samba.org/pub/samba/stable/samba-4.6.0.tar.gz')
 
-## install samba4
+#### extract
 
-os.system('yum install -y samba45 samba45-winbind-clients samba45-winbind samba45-client samba45-dc samba45-pidl samba45-python samba45-winbind-krb5-locator perl-Parse-Yapp perl-Test-Base python2-crypto samba45-common-tools')
+os.system('tar -zxvf samba-4.6.0.tar.gz')
+
+### buil
+
+print('\n Begin compile')
+
+time.sleep()
+
+os.system('''cd samba-4.6.0 && ./configure \
+--prefix=/usr \
+--localstatedir=/var \
+--with-configdir=/etc/samba \
+--libdir=/usr/lib64 \
+--with-modulesdir=/usr/lib64/samba \
+--with-pammodulesdir=/lib64/security \
+--with-lockdir=/var/lib/samba \
+--with-logfilebase=/var/log/samba \
+--with-piddir=/run/samba \
+--with-privatedir=/etc/samba \
+--enable-cups \
+--with-acl-support \
+--with-ads \
+--with-automount \
+--enable-fhs \
+--with-pam \
+--with-quotas \
+--with-shared-modules=idmap_rid,idmap_ad,idmap_hash,idmap_adex \
+--with-syslog \
+--with-utmp \
+--with-dnsupdate  ''')
+
+############ make and install
+
+os.system('cd samba-4.6.0 && make ')
+
+os.system('cd samba-4.6.0 && make install ')
 
 
 with open('/etc/resolv.conf','w') as f2:
@@ -185,7 +218,7 @@ os.system('klist')
 ###add the server to the existing domain
 
 
-os.system('samba-tool domain join sunil.cc  DC -U"SUNIL\/administrator" --dns-backend=SAMBA_INTERNAL')
+os.system('samba-tool domain join '+domain+'  DC -U"'+domain+'\/administrator" --dns-backend=SAMBA_INTERNAL')
 
 ### create samba service
 os.system('cp domain/samba.service /etc/systemd/system/samba.service')

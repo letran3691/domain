@@ -187,6 +187,8 @@ os.system('/usr/local/samba/bin/samba-tool domain provision --use-rfc2307 --inte
 
 os.system('cp domain/samba.service /etc/systemd/system/samba.service')
 
+os.system('cp /usr/local/samba/bin/samba-tool /usr/sbin')
+
 os.system('systemctl enable samba && systemctl start samba')
 
 

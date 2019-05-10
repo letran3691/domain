@@ -32,4 +32,12 @@ echo 'python3.6 -V'
 
 chmod -R +x /root/domain/*.py
 
-echo 'install done!!!'
+read -s -p "Enter Servername: " servername
+
+echo $servername > /etc/hostname
+
+echo 'install done!!! and reboot after 5s'
+
+sleep 5
+
+reboot now
