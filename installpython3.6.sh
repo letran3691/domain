@@ -33,5 +33,3 @@ echo 'python3.6 -V'
 chmod -R +x /root/domain/*.py
 
 echo 'install done!!!'
-
-/usr/local/bin/python3.6 domain/PDC.py
