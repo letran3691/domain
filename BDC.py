@@ -2,16 +2,28 @@
 
 import os,time,subprocess,fileinput
 
+os.system('systemctl stop firewalld')
+os.system('systemctl disable firewalld')
 
-ip = input('Enter ip server: ')
+ip_dc2 = input('Enter ip dc2 : ')
 print('Example Engter Netmask: 8 16 24')
 netmask = input('Enter Netmask: ')
 
-print('Example host : dc1.domain.local dc1')
-host = input('Enter host: ')
+print('Example domain : domain.local')
+host = input('Enter domain : ')
+
+ip_dc1 = input('Enter ip dc1 :')
+
+with open('/etc/hosts','a+') as f:
+
+   f.write('\n'+ ip_dc2 +' '+ 'dc2.'+ host +' dc2')
+   f.write('\n' + ip_dc1 + ' ' + 'dc1.' + host + ' dc1')
+   f.close()
 
 gw = os.popen("ip route |grep default | awk '{print $3}'").read()
 print(gw)
+
+################################## config network interface
 
 def eno():
     a = os.path.exists('/sys/class/net/eno1')
@@ -41,13 +53,13 @@ ens_ = ens()
 #print(bool(ens_))
 
 if bool(eth_) == True:
-    a = os.system('find / -name ifcfg-eth0')
-    with fileinput.FileInput(a, inplace=True, backup='.bak') as  f:
+
+    with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-eth0', inplace=True, backup='.bak') as  f:
         for line in f:
-            # print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
-            print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+            print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
+            #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
-    with open(a, 'a+') as f1:
+    with open('/etc/sysconfig/network-scripts/ifcfg-eth0', 'a+') as f1:
         f1.write('\nIPADDR=' + ip)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
@@ -57,13 +69,12 @@ if bool(eth_) == True:
 
 elif bool(eno_) == True:
 
-    a = os.system('find / -name ifcfg-eno1')
-    with fileinput.FileInput(a, inplace=True, backup='.bak') as  f:
+    with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-eno1', inplace=True, backup='.bak') as  f:
         for line in f:
-            #print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
-            print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+            print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
+            #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
-    with open(a,'a+') as f1:
+    with open('/etc/sysconfig/network-scripts/ifcfg-eno1','a+') as f1:
         f1.write('\nIPADDR='+ip)
         f1.write('\nFREFIX='+netmask)
         f1.write('\nGATEWAY='+gw)
@@ -73,13 +84,12 @@ elif bool(eno_) == True:
 
 elif bool(em_ )== True:
 
-    a = os.system('find / -name ifcfg-em1')
-    with fileinput.FileInput(a, inplace=True, backup='.bak') as  f:
+    with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-em1', inplace=True, backup='.bak') as  f:
         for line in f:
-            # print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
-            print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+            print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
+            #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
-    with open(a, 'a+') as f1:
+    with open('/etc/sysconfig/network-scripts/ifcfg-em1', 'a+') as f1:
         f1.write('\nIPADDR=' + ip)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
@@ -87,16 +97,14 @@ elif bool(em_ )== True:
         f1.write('\nDNS2=8.8.8.8')
         f1.close()
 
-elif bool(ens__ )== True:
+elif bool(ens_ )== True:
 
-    a = os.system('find / -name ifcfg-ens33')
-
-    with fileinput.FileInput( a, inplace=True, backup='.bak') as  f:
+    with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-ens33', inplace=True, backup='.bak') as  f:
         for line in f:
-            # print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
-            print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+            print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
+            #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
-    with open(a, 'a+') as f1:
+    with open('/etc/sysconfig/network-scripts/ifcfg-ens33', 'a+') as f1:
         f1.write('\nIPADDR=' + ip)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
@@ -107,23 +115,21 @@ elif bool(ens__ )== True:
 else:
     print("dont't have interface")
 
+########### restart network
 
-with open('hosts','a+') as f:
+os.system('systemctl restart network')
 
-   f.write('\n'+ ip +' '+ host)
-   f.close()
+#os.system('yum  –y  install epel-release && yum –y update')
 
-os.system('yum  –y  install epel-release && yum –y update')
+#### install packet basic
 
-## install packet basic
+os.system('yum -y install wget authconfig krb5-workstation')
 
-os.system('yum install vim wget authconfig krb5-workstation -y')
+##### install repo samba4
 
-## install repo samba4
+#os.system('cd  /etc/yum.repos.d/')
 
-os.system('cd  /etc/yum.repos.d/')
-
-os.system('wget http://wing-net.ddo.jp/wing/7/EL7.wing.repo')
+os.system(' cd  /etc/yum.repos.d/ && wget http://wing-net.ddo.jp/wing/7/EL7.wing.repo')
 os.system("sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/EL7.wing.repo")
 os.system('yum clean all')
 
@@ -132,9 +138,16 @@ os.system('yum clean all')
 os.system('yum install -y samba45 samba45-winbind-clients samba45-winbind samba45-client samba45-dc samba45-pidl samba45-python samba45-winbind-krb5-locator perl-Parse-Yapp perl-Test-Base python2-crypto samba45-common-tools')
 
 
-with open('resolv.conf','w+') as f2:
-    f2.write('nameserver ' + ip)
+with open('/etc/resolv.conf','a+') as f2:
+    f2.write('nameserver ' + ip_dc1)
     f2.close()
+
+
+
+############ transfer file hosts
+
+os.system('scp /etc/hosts root@dc1.'+domain+':/etc/')
+
 
 ## remove file created when install samba
 
@@ -142,24 +155,66 @@ os.system('rm -rf /etc/krb5.conf')
 os.system('rm -rf /etc/samba/smb.conf')
 
 domain = input('Enter domain name : ')
+
 ## copy file krb5.conf to etc
+
+with fileinput.FileInput('krb5.conf', inplace=True,backup='.bak') as f3:
+    for line in 3:
+        print(line.replace('default_realm = domain.local','default_realm = '+domain.upper()))
+        f3.close()
+
+
 os.system('cp krb5.conf /etc/')
 
-## get the kerberos key from DC1
+###### get the kerberos key from DC1
+
 os.system('kinit administrator@'+domain.upper())
 os.system('klist')
 
 
 ###add the server to the existing domain
 
-os.system('samba-tool domain join sunil.cc  DC -U"SUNIL\administrator" --dns-backend=SAMBA_INTERNAL')
+os.system('samba-tool domain join sunil.cc  DC -U"SUNIL\/administrator" --dns-backend=SAMBA_INTERNAL')
+
 ### create samba service
 os.system('cp samba.service /etc/systemd/system/samba.service')
 
+####################################################################
+
+print('switch DC1 press Enter')
+
+time.sleep(60)
+
+input('Enter to continue.....')
+
+#################################################################
 
 os.system('systemctl enable samba &&  systemctl start samba')
+
+##################################################################
+
+print('switch DC1 press Enter')
+
+time.sleep(30)
+
+input('Enter to continue.....')
+
+###################################################################
+
 os.system('samba-tool drs showrepl')
 
-# print('install and config done!!!! reboot after 5s')
-# time.sleep(5)
+###################################################################
+
+print('switch DC1 press Enter')
+
+time.sleep(30)
+
+input('Enter to continue.....')
+
+###################################################################
+
+print('install and config done!!!! reboot after 5s')
+time.sleep(5)
+
+os.system('reboot now')
 

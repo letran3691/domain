@@ -20,6 +20,8 @@ netmask = input('Enter Netmask: ')
 print('Example host : domain.local')
 host = input('Enter host: ')
 
+domain = input('Enter domain name : ')
+
 with open('/etc/hosts','a+') as f:
 
    f.write('\n'+ ip +' '+ 'dc1.'+ host +' dc1')
@@ -174,10 +176,17 @@ os.system('cp domain/samba.service /etc/systemd/system/samba.service')
 
 os.system('systemctl enable samba && systemctl start samba')
 
+
+print('switch DC2 to install')
+
+time.sleep(30)
+
+input('Enter to continue.....')
+
+
 os.system('yum -y install tdb-tools')
 
 ### backup file idmap.ldb
-
 os.system('tdbbackup -s .bak /usr/local/samba/private/idmap.ldb')
 
 
@@ -186,36 +195,58 @@ os.system('tdbbackup -s .bak /usr/local/samba/private/idmap.ldb')
 
 ### copy file imap.ldb.bak to DC2
 
-# domain = input('Enter domain name : ')
-#
-# os.system('scp -r /usr/local/samba/private/idmap.ldb.bak root@dc2.'+domain+':/var/lib/samba/private/idmap.ldb ')
-#
-#
-# with open('/etc/resolv.conf','a+') as f3:
-#     f3.write('search '+ domain )
-#     f3.write('nameserver '+ ip)
-#     f3.close()
-#
-#
+
+os.system('scp -r /usr/local/samba/private/idmap.ldb.bak root@dc2.'+domain+':/var/lib/samba/private/idmap.ldb ')
+
+############################################################################
+
+print('switch DC2 press Enter')
+
+time.sleep(30)
+
+input('Enter to continue.....')
+
+#############################################################################
+
+with open('/etc/resolv.conf','a+') as f3:
+    f3.write('search '+ domain )
+    f3.write('nameserver '+ ip)
+    f3.close()
+
+
 
 ## remove file krb5.conf
-# os.system('rm -f /etc/krb5.conf')
-#
-# os.system('cp krb5.conf /etc/krb5.conf ')
-#
-# with fileinput.FileInput('krb5.conf', inplace=True, backup='.bak') as f4:
-#     for line in f4:
-#
-#         print(line.replace('default_realm = SUNIL.CC', 'default_realm = '+ domain.upper()))
-#
-#     f4.close()
+
+os.system('rm -f /etc/krb5.conf')
+
+os.system('cd domain && cp krb5.conf /etc/ ')
+
+with fileinput.FileInput('/etc/krb5.conf', inplace=True, backup='.bak') as f4:
+    for line in f4:
+
+        print(line.replace('default_realm = domain.local', 'default_realm = '+ domain.upper()))
+
+    f4.close()
 #
 # #### Checking the Kerberos ticket
-#
-# os.system('kinit administrator@'+domain.upper())
-# os.system('klist')
-#
-# os.system('/usr/local/samba/bin/samba-tool drs showrepl')
+
+os.system('kinit administrator@'+domain.upper())
+os.system('klist')
+
+###################################################################################
+
+print('switch DC2 press Enter')
+
+time.sleep(30)
+
+input('Enter to continue.....')
+
+################################################################################
+
+os.system('/usr/local/samba/bin/samba-tool drs showrepl')
 
 print('install and config done!!!! reboot after 5s')
+
 time.sleep(5)
+
+os.system('reboot now')
