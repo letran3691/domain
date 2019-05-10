@@ -62,8 +62,8 @@ if bool(eth_) == True:
 
     with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-eth0', inplace=True, backup='.bak') as  f:
         for line in f:
-            # print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
-            print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+            print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
+            #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
     with open('/etc/sysconfig/network-scripts/ifcfg-eth0', 'a+') as f1:
         f1.write('\nIPADDR=' + ip)
@@ -77,8 +77,8 @@ elif bool(eno_) == True:
 
     with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-eno1', inplace=True, backup='.bak') as  f:
         for line in f:
-            #print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
-            print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+            print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
+            #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
     with open('/etc/sysconfig/network-scripts/ifcfg-eno1','a+') as f1:
         f1.write('\nIPADDR='+ip)
@@ -92,8 +92,8 @@ elif bool(em_ )== True:
 
     with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-em1', inplace=True, backup='.bak') as  f:
         for line in f:
-            # print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
-            print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+            print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
+            #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
     with open('/etc/sysconfig/network-scripts/ifcfg-em1', 'a+') as f1:
         f1.write('\nIPADDR=' + ip)
@@ -107,8 +107,8 @@ elif bool(ens_ )== True:
 
     with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-ens33', inplace=True, backup='.bak') as  f:
         for line in f:
-            # print(line.replace('BOOTPROTO="none"', 'BOOTPROTO=static'))
-            print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+            print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
+            #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
     with open('/etc/sysconfig/network-scripts/ifcfg-ens33', 'a+') as f1:
         f1.write('\nIPADDR=' + ip)
@@ -124,6 +124,8 @@ else:
 #### restart network
 
 os.system('systemctl restart network')
+
+time.sleep(7)
 
 ##### install epel-release
 
@@ -175,6 +177,11 @@ with fileinput.FileInput('/etc/krb5.conf', inplace=True,backup='.bak') as  f2:
     f2.close()
 
 #### domain provision
+
+print('Password Administrator > 7 characters'.upper())
+
+time.sleep(5)
+
 
 os.system('/usr/local/samba/bin/samba-tool domain provision --use-rfc2307 --interactive')
 

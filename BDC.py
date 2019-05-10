@@ -59,10 +59,10 @@ if bool(eth_) == True:
             #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
     with open('/etc/sysconfig/network-scripts/ifcfg-eth0', 'a+') as f1:
-        f1.write('\nIPADDR=' + ip)
+        f1.write('\nIPADDR=' + ip_dc2)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
-        f1.write('\nDNS1=' + ip)
+        f1.write('\nDNS1=' + ip_dc2)
         f1.write('\nDNS2=8.8.8.8')
         f1.close()
 
@@ -74,10 +74,10 @@ elif bool(eno_) == True:
             #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
     with open('/etc/sysconfig/network-scripts/ifcfg-eno1','a+') as f1:
-        f1.write('\nIPADDR='+ip)
+        f1.write('\nIPADDR='+ip_dc2)
         f1.write('\nFREFIX='+netmask)
         f1.write('\nGATEWAY='+gw)
-        f1.write('\nDNS1='+ ip)
+        f1.write('\nDNS1='+ ip_dc2)
         f1.write('\nDNS2=8.8.8.8')
         f1.close()
 
@@ -89,10 +89,10 @@ elif bool(em_ )== True:
             #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
     with open('/etc/sysconfig/network-scripts/ifcfg-em1', 'a+') as f1:
-        f1.write('\nIPADDR=' + ip)
+        f1.write('\nIPADDR=' + ip_dc2)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
-        f1.write('\nDNS1=' + ip)
+        f1.write('\nDNS1=' + ip_dc2)
         f1.write('\nDNS2=8.8.8.8')
         f1.close()
 
@@ -117,6 +117,8 @@ else:
 ########### restart network
 
 os.system('systemctl restart network')
+
+time.sleep(7)
 
 #os.system('yum  –y  install epel-release && yum –y update')
 
@@ -165,7 +167,7 @@ os.system('cd domain/ && cp krb5.conf /etc/')
 
 with open('/etc/krb5.conf','a+') as f3:
 
-    f3.write('\n\tdefault_realm = '+domain.upper())
+    f3.write('\n    default_realm = '+domain.upper())
     f3.close()
 
 ##### get the kerberos key from DC1
@@ -175,6 +177,7 @@ os.system('klist')
 
 
 ###add the server to the existing domain
+
 
 os.system('samba-tool domain join sunil.cc  DC -U"SUNIL\/administrator" --dns-backend=SAMBA_INTERNAL')
 
