@@ -7,7 +7,9 @@ sleep 4
 yum install gcc openssl-devel bzip2-devel wget git -y
 
 ## Download Python
+
 echo 'Download Python'
+
 sleep 4
 cd /usr/src
 wget https://www.python.org/ftp/python/3.6.8/Python-3.6.8.tgz
@@ -16,7 +18,9 @@ wget https://www.python.org/ftp/python/3.6.8/Python-3.6.8.tgz
 tar xzf Python-3.6.8.tgz
 
 # make and install
+
 echo 'make and install'
+
 sleep 4
 cd Python-3.6.8
 ./configure --enable-optimizations
@@ -30,4 +34,4 @@ chmod -R +x /root/domain/*.py
 
 echo 'install done!!!'
 
-/usr/bin/python3.6 domain/PDC.py
+/usr/local/bin/python3.6 domain/PDC.py

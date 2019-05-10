@@ -17,14 +17,14 @@ ip = input('enter ip PDC: ')
 print('Example Enter Netmask: 8 16 24')
 netmask = input('Enter Netmask: ')
 
-print('Example host : domain.local')
-host = input('Enter host: ')
+# print('Example host : domain.local')
+# host = input('Enter host: ')
 
 domain = input('Enter domain name : ')
 
 with open('/etc/hosts','a+') as f:
 
-   f.write('\n'+ ip +' '+ 'dc1.'+ host +' dc1')
+   f.write('\n'+ ip +' '+ 'dc1.'+ domain +' dc1')
    f.close()
 
 gw = os.popen("ip route |grep default | awk '{print $3}'").read()
@@ -159,6 +159,12 @@ print('\nBegin install')
 time.sleep(3)
 
 os.system('cd /root/samba-4.6.0 && make && make install')
+
+
+print('\ncompile and install done!!!!')
+
+time.sleep(3)
+
 
 ##### Edit file  /etc/krb5.conf
 

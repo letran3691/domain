@@ -10,14 +10,14 @@ print('Example Engter Netmask: 8 16 24')
 netmask = input('Enter Netmask: ')
 
 print('Example domain : domain.local')
-host = input('Enter domain : ')
+domain = input('Enter domain : ')
 
 ip_dc1 = input('Enter ip dc1 :')
 
 with open('/etc/hosts','a+') as f:
 
-   f.write('\n'+ ip_dc2 +' '+ 'dc2.'+ host +' dc2')
-   f.write('\n' + ip_dc1 + ' ' + 'dc1.' + host + ' dc1')
+   f.write('\n'+ ip_dc2 +' '+ 'dc2.'+ domain +' dc2')
+   f.write('\n' + ip_dc1 + ' ' + 'dc1.' + domain + ' dc1')
    f.close()
 
 gw = os.popen("ip route |grep default | awk '{print $3}'").read()
@@ -105,10 +105,10 @@ elif bool(ens_ )== True:
             #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
     with open('/etc/sysconfig/network-scripts/ifcfg-ens33', 'a+') as f1:
-        f1.write('\nIPADDR=' + ip)
+        f1.write('\nIPADDR=' + ip_dc2)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
-        f1.write('\nDNS1=' + ip)
+        f1.write('\nDNS1=' + ip_dc2)
         f1.write('\nDNS2=8.8.8.8')
         f1.close()
 
@@ -154,7 +154,7 @@ os.system('scp /etc/hosts root@dc1.'+domain+':/etc/')
 os.system('rm -rf /etc/krb5.conf')
 os.system('rm -rf /etc/samba/smb.conf')
 
-domain = input('Enter domain name : ')
+##domain = input('Enter domain name : ')
 
 ## copy file krb5.conf to etc
 
