@@ -1,0 +1,13 @@
+[wing]
+name=EL $releasever - $basearch - wing Repository
+baseurl=http://wing-repo.net/wing/$releasever/$basearch/
+enabled=1
+gpgcheck=0
+priority=2
+
+[wing-source]
+name=EL $releasever - $basearch - wing source Repository
+baseurl=http://wing-repo.net/wing/$releasever/SRPMS/
+enabled=1
+gpgcheck=0
+priority=2

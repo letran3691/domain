@@ -119,7 +119,7 @@ else:
 
 os.system('systemctl restart network')
 
-print('prepare install')
+print('\nprepare install.......')
 
 time.sleep(7)
 
@@ -134,7 +134,7 @@ os.system('yum -y install wget authconfig krb5-workstation')
 
 #os.system('cd  /etc/yum.repos.d/')
 
-os.system(' cd  /etc/yum.repos.d/ && wget http://wing-net.ddo.jp/wing/7/EL7.wing.repo')
+os.system(' cd domain/EL7.wing.repo /etc/yum.repos.d')
 os.system("sed -i 's@enabled=0@enabled=1@g' /etc/yum.repos.d/EL7.wing.repo")
 os.system('yum clean all')
 
