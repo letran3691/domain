@@ -7,12 +7,12 @@ os.system('systemctl disable firewalld')
 
 ip_dc2 = input('Enter ip dc2 : ')
 print('Example Engter Netmask: 8 16 24')
-netmask = input('Enter Netmask: ')
+netmask = input('Enter Netmask : ')
 
 print('Example domain : domain.local')
 domain = input('Enter domain : ')
 
-ip_dc1 = input('Enter ip dc1 :')
+ip_dc1 = input('Enter ip dc1 : ')
 
 with open('/etc/hosts','a+') as f:
 
@@ -21,7 +21,6 @@ with open('/etc/hosts','a+') as f:
    f.close()
 
 gw = os.popen("ip route |grep default | awk '{print $3}'").read()
-print(gw)
 
 ################################## config network interface
 
@@ -146,6 +145,10 @@ with open('/etc/resolv.conf','a+') as f2:
 
 ############ transfer file hosts
 
+print('copy file')
+
+time.sleep(3)
+
 os.system('scp /etc/hosts root@dc1.'+domain+':/etc/')
 
 
@@ -158,15 +161,14 @@ os.system('rm -rf /etc/samba/smb.conf')
 
 ## copy file krb5.conf to etc
 
-with fileinput.FileInput('krb5.conf', inplace=True,backup='.bak') as f3:
-    for line in 3:
-        print(line.replace('default_realm = domain.local','default_realm = '+domain.upper()))
-        f3.close()
+os.system('cd domain/ && cp krb5.conf /etc/')
 
+with open('/etc/krb5.conf','a+') as f3:
 
-os.system('cp krb5.conf /etc/')
+    f3.write('\n\tdefault_realm = '+domain.upper())
+    f3.close()
 
-###### get the kerberos key from DC1
+##### get the kerberos key from DC1
 
 os.system('kinit administrator@'+domain.upper())
 os.system('klist')
@@ -177,7 +179,7 @@ os.system('klist')
 os.system('samba-tool domain join sunil.cc  DC -U"SUNIL\/administrator" --dns-backend=SAMBA_INTERNAL')
 
 ### create samba service
-os.system('cp samba.service /etc/systemd/system/samba.service')
+os.system('cp domain/samba.service /etc/systemd/system/samba.service')
 
 ####################################################################
 
@@ -217,4 +219,4 @@ print('install and config done!!!! reboot after 5s')
 time.sleep(5)
 
 os.system('reboot now')
-
+#

@@ -225,15 +225,15 @@ with open('/etc/resolv.conf','a+') as f3:
 
 os.system('rm -f /etc/krb5.conf')
 
-os.system('cd domain && cp krb5.conf /etc/ ')
-
-with fileinput.FileInput('/etc/krb5.conf', inplace=True, backup='.bak') as f4:
-    for line in f4:
-
-        print(line.replace('default_realm = domain.local', 'default_realm = '+ domain.upper()))
-
-    f4.close()
+# os.system('cd domain && cp krb5.conf /etc/ ')
 #
+# with fileinput.FileInput('/etc/krb5.conf', inplace=True, backup='.bak') as f4:
+#     for line in f4:
+#
+#         print(line.replace('default_realm = domain.local', 'default_realm = '+ domain.upper()))
+#
+#     f4.close()
+# #
 # #### Checking the Kerberos ticket
 
 os.system('kinit administrator@'+domain.upper())
