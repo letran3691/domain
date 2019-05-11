@@ -13,11 +13,10 @@ domain = input('Enter domain : ')
 
 a = domain.split('.')[0]
 
-exit(0)
 ip_dc1 = input('Enter ip dc1 : ')
-host_pdc = print('Enter hostname PDC: ')
+host_pdc = input('Enter hostname PDC: ')
 
-host_n = os.popen('cat /etc/hostname')
+host_n = subprocess.check_output('cat /etc/hostname',shell=True,universal_newlines=True)
 
 with open('/etc/hosts','a+') as f:
 
