@@ -2,11 +2,11 @@
 
 import os,time,subprocess,fileinput
 
-ip_dc2 = input('Enter ip dc2 : ')
+ip_dc2 = input('Enter ip Backup DC : ')
 print('\nExample Enter Netmask: 8 16 24')
 netmask = input('Enter Netmask : ')
 
-host_n = input('\nEnter hostname BDC: ')
+host_n = input('\nEnter hostname Backup DC: ')
 
 print('\nExample domain : domain.local')
 domain = input('Enter domain : ')
@@ -28,7 +28,7 @@ with open('/etc/hosts','a+') as f:
    f.close()
 ########### transfer file hosts
 
-print('copy file hosts to Primary DC')
+print('Copy file hosts to Primary DC')
 
 time.sleep(3)
 
@@ -129,13 +129,13 @@ elif bool(ens_ )== True:
         f1.close()
 
 else:
-    print("dont't have interface")
+    print("Dont't have interface")
 
 ########### restart network
 
 os.system('systemctl restart network')
 
-print('\nprepare install.......\n')
+print('\nPrepare install.......\n')
 
 time.sleep(7)
 
@@ -148,7 +148,7 @@ time.sleep(7)
 os.system('yum -y install perl gcc libacl-devel libblkid-devel gnutls-devel readline-devel python-devel gdb pkgconfig krb5-workstation zlib-devel setroubleshoot-server libaio-devel setroubleshoot-plugins policycoreutils-python libsemanage-python setools-libs-python setools-libs popt-devel libpcap-devel sqlite-devel libidn-devel libxml2-devel libacl-devel libsepol-devel libattr-devel keyutils-libs-devel cyrus-sasl-devel cups-devel bind-utils libxslt docbook-style-xsl openldap-devel pam-devel bzip2 wget')
 
 
-print('\ninstall krb5')
+print('\nInstall krb5')
 time.sleep(3)
 
 os.system('yum -y install authconfig krb5-workstation')
@@ -215,7 +215,7 @@ os.system('cp domain/samba.service /etc/systemd/system/samba.service')
 
 ####################################################################
 
-print('\n2: switch Primary DC press Enter()')
+print('\n2: Switch Primary DC press Enter()')
 
 time.sleep(60)
 
@@ -232,11 +232,11 @@ os.system('scp /etc/krb5.conf root@'+host_pdc+'.'+domain+':/etc/ ')
 
 ###################################################################
 
-print('\ninstall done!!!!!')
+print('\nInstall done!!!!!')
 
 time.sleep(2)
 
-print('\n4: switch Primary DC press Enter')
+print('\n4: Switch Primary DC press Enter')
 
 time.sleep(30)
 
@@ -252,7 +252,7 @@ print('showrepl done!!!!')
 
 time.sleep(3)
 
-print('\n6: switch Primary DC press Enter')
+print('\n6: Switch Primary DC press Enter')
 
 time.sleep(30)
 
@@ -260,7 +260,7 @@ input('Enter to continue.....')
 
 ###################################################################
 
-print('install and config done!!!! reboot after 5s')
+print('Install and config done!!!! reboot after 5s')
 time.sleep(5)
 
 os.system('reboot now')
