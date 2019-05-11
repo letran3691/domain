@@ -15,9 +15,9 @@ domain = input('Enter domain : ')
 
 a = domain.split('.')[0]
 
-ip_dc1 = input('\nEnter ip PDC : ')
+ip_dc1 = input('\nEnter ip Primary DC : ')
 
-host_pdc = input('Enter hostname PDC: ')
+host_pdc = input('Enter hostname Primary DC: ')
 
 #host_n = subprocess.check_output('cat /etc/hostname',shell=True,universal_newlines=True)
 
@@ -28,7 +28,7 @@ with open('/etc/hosts','a+') as f:
    f.close()
 ########### transfer file hosts
 
-print('copy file hosts to PDC')
+print('copy file hosts to Primary DC')
 
 time.sleep(3)
 
@@ -215,7 +215,7 @@ os.system('cp domain/samba.service /etc/systemd/system/samba.service')
 
 ####################################################################
 
-print('\n2: switch PDC press Enter()')
+print('\n2: switch Primary DC press Enter()')
 
 time.sleep(60)
 
@@ -236,7 +236,7 @@ print('\ninstall done!!!!!')
 
 time.sleep(2)
 
-print('\n4: switch PDC press Enter')
+print('\n4: switch Primary DC press Enter')
 
 time.sleep(30)
 
@@ -252,7 +252,7 @@ print('showrepl done!!!!')
 
 time.sleep(3)
 
-print('\n6: switch PDC press Enter')
+print('\n6: switch Primary DC press Enter')
 
 time.sleep(30)
 
