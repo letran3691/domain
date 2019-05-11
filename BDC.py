@@ -3,7 +3,7 @@
 import os,time,subprocess,fileinput
 
 ip_dc2 = input('Enter ip dc2 : ')
-print('\nExample Engter Netmask: 8 16 24')
+print('\nExample Enter Netmask: 8 16 24')
 netmask = input('Enter Netmask : ')
 
 print('\nExample domain : domain.local')
@@ -13,7 +13,7 @@ domain = input('Enter domain : ')
 
 a = domain.split('.')[0]
 
-ip_dc1 = input('\nEnter ip dc1 : ')
+ip_dc1 = input('\nEnter ip PDC : ')
 
 host_pdc = input('Enter hostname PDC: ')
 
@@ -24,6 +24,18 @@ with open('/etc/hosts','a+') as f:
    f.write('\n'+ ip_dc2 +' '+host_n+'.'+ domain +' '+host_n)
    f.write('\n' + ip_dc1 + ' ' + host_pdc+'.' + domain + ' '+host_pdc)
    f.close()
+
+
+
+########### transfer file hosts
+
+print('copy file hosts to PDC')
+
+time.sleep(3)
+
+os.system('scp /etc/hosts root@'+host_pdc+'.'+domain+':/etc/')
+
+
 
 gw = os.popen("ip route |grep default | awk '{print $3}'").read()
 
@@ -151,34 +163,11 @@ print('\n Begin compiling')
 
 time.sleep(3)
 
-os.system('''cd samba-4.6.0 && ./configure \
---prefix=/usr \
---localstatedir=/var \
---with-configdir=/etc/samba \
---libdir=/usr/lib64 \
---with-modulesdir=/usr/lib64/samba \
---with-pammodulesdir=/lib64/security \
---with-lockdir=/var/lib/samba \
---with-logfilebase=/var/log/samba \
---with-piddir=/run/samba \
---with-privatedir=/etc/samba \
---enable-cups \
---with-acl-support \
---with-ads \
---with-automount \
---enable-fhs \
---with-pam \
---with-quotas \
---with-shared-modules=idmap_rid,idmap_ad,idmap_hash,idmap_adex \
---with-syslog \
---with-utmp \
---with-dnsupdate  ''')
+os.system('cd /root/samba-4.6.0 && ./configure --enable-debug --enable-selftest --with-ads --with-systemd --with-winbind')
 
 ############ make and install
 
-os.system('cd samba-4.6.0 && make ')
-
-os.system('cd samba-4.6.0 && make install ')
+os.system('cd samba-4.6.0 && make && make install ')
 
 
 with open('/etc/resolv.conf','w') as f2:
@@ -189,18 +178,10 @@ with open('/etc/resolv.conf','w') as f2:
 
 
 
-########### transfer file hosts
-
-print('copy file')
-
-time.sleep(3)
-
-os.system('scp /etc/hosts root@'+host_pdc+'.'+domain+':/etc/')
-
 print('\ninstall krb5')
 time.sleep(3)
 
-os.system('yum -y install krb5-workstation')
+os.system('yum -y install authconfig krb5-workstation')
 
 
 ## remove file created when install samba
@@ -235,13 +216,15 @@ os.system('cp domain/samba.service /etc/systemd/system/samba.service')
 
 ####################################################################
 
-print('switch PDC press Enter')
+print('\n2: switch PDC press Enter()')
 
 time.sleep(60)
 
 input('Enter to continue.....')
 
 #################################################################
+
+os.system('cp /usr/local/samba/bin/samba-tool /usr/sbin/')
 
 os.system('systemctl enable samba &&  systemctl start samba')
 
@@ -251,7 +234,11 @@ os.system('scp /etc/krb5.conf root@'+host_pdc+'.'+domain+':/etc/ ')
 
 ###################################################################
 
-print('switch PDC press Enter')
+print('\ninstall done!!!!!')
+
+time.sleep(2)
+
+print('\n4: switch PDC press Enter')
 
 time.sleep(30)
 
@@ -263,7 +250,11 @@ os.system('samba-tool drs showrepl')
 
 ###################################################################
 
-print('switch PDC press Enter')
+print('showrepl done!!!!')
+
+time.sleep(3)
+
+print('\n6: switch PDC press Enter')
 
 time.sleep(30)
 

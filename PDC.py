@@ -8,18 +8,14 @@ with fileinput.FileInput('/etc/selinux/config', inplace=True,backup='.bak') as  
        print(line.replace('SELINUX=enforcing','SELINUX=disabled'),end='')
     f1.close()
 
-ip = input('enter ip PDC: ')
-
+ip = input('\nenter ip PDC: ')
 print('Example Enter Netmask: 8 16 24')
-
 netmask = input('Enter Netmask: ')
 
 host_n = subprocess.check_output('cat /etc/hostname',shell=True,universal_newlines=True)
 
 
-print('Example domain : domain.local')
-
-
+print('\nExample domain : domain.local')
 domain = input('Enter domain name : ')
 
 with open('hosts','a+') as f:
@@ -194,12 +190,13 @@ os.system('cp /usr/local/samba/bin/samba-tool /usr/sbin/')
 os.system('systemctl enable samba && systemctl start samba')
 
 
-print('\nswitch BDC to install')
+print('\n1:switch BDC to install')
 
 time.sleep(50)
 
 input('Enter to continue.....')
 
+##########################################################
 
 print(' install tdb-tools')
 
@@ -214,7 +211,11 @@ os.system('tdbbackup -s .bak /usr/local/samba/private/idmap.ldb')
 
 ######################################################################################################################
 
-### copy file imap.ldb.bak to DC2
+### copy file imap.ldb.bak to BDC
+
+print('copy dmap.ldb.bak to BDC')
+
+time.sleep(3)
 
 host_bdc = input('Enter hostname BDC: ')
 
@@ -226,11 +227,11 @@ os.system('scp -r /usr/local/samba/private/idmap.ldb.bak root@'+host_bdc+'.'+dom
 
 os.system('rm -f /etc/krb5.conf')
 
-print('switch BDC press Enter')
+print('\n3: switch BDC press Enter ')
 
 time.sleep(30)
 
-input('Enter to continue.....')
+input('\nEnter to continue.....')
 
 #############################################################################
 
@@ -255,13 +256,15 @@ os.system('klist')
 
 ###################################################################################
 
-print('switch BDC press Enter')
+print('\n5: switch BDC press Enter')
 
 time.sleep(30)
 
 input('Enter to continue.....')
 
 ################################################################################
+
+print('BDC showrepl done')
 
 os.system('/usr/local/samba/bin/samba-tool drs showrepl')
 
