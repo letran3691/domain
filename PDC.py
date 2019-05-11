@@ -196,10 +196,14 @@ os.system('systemctl enable samba && systemctl start samba')
 
 print('\nswitch BDC to install')
 
-time.sleep(30)
+time.sleep(50)
 
 input('Enter to continue.....')
 
+
+print(' install tdb-tools')
+
+time.sleep(3)
 
 os.system('yum -y install tdb-tools')
 

@@ -3,17 +3,17 @@
 import os,time,subprocess,fileinput
 
 ip_dc2 = input('Enter ip dc2 : ')
-print('Example Engter Netmask: 8 16 24')
+print('\nExample Engter Netmask: 8 16 24')
 netmask = input('Enter Netmask : ')
 
-print('Example domain : domain.local')
+print('\nExample domain : domain.local')
 domain = input('Enter domain : ')
 
 ############ tach chuoi
 
 a = domain.split('.')[0]
 
-ip_dc1 = input('Enter ip dc1 : ')
+ip_dc1 = input('\nEnter ip dc1 : ')
 
 host_pdc = input('Enter hostname PDC: ')
 
@@ -147,7 +147,7 @@ os.system('tar -zxvf samba-4.6.0.tar.gz')
 
 ### buil
 
-print('\n Begin compile')
+print('\n Begin compiling')
 
 time.sleep(3)
 
@@ -197,6 +197,11 @@ time.sleep(3)
 
 os.system('scp /etc/hosts root@'+host_pdc+'.'+domain+':/etc/')
 
+print('\ninstall krb5')
+time.sleep(3)
+
+os.system('yum -y install krb5-workstation')
+
 
 ## remove file created when install samba
 
@@ -223,7 +228,7 @@ os.system('klist')
 ###add the server to the existing domain
 
 
-os.system('samba-tool domain join '+domain+'  DC -U"'+a+'\/administrator" --dns-backend=SAMBA_INTERNAL')
+os.system('samba-tool domain join '+domain+'  DC -U"'+a+'\\administrator" --dns-backend=SAMBA_INTERNAL')
 
 ### create samba service
 os.system('cp domain/samba.service /etc/systemd/system/samba.service')
