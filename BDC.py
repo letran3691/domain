@@ -3,6 +3,7 @@
 import os,time,subprocess,fileinput
 
 ip_dc2 = input('Enter ip dc2 : ')
+host_n = input('Enter hostname BDC: ')
 print('\nExample Enter Netmask: 8 16 24')
 netmask = input('Enter Netmask : ')
 
@@ -17,16 +18,14 @@ ip_dc1 = input('\nEnter ip PDC : ')
 
 host_pdc = input('Enter hostname PDC: ')
 
-host_n = subprocess.check_output('cat /etc/hostname',shell=True,universal_newlines=True)
+#host_n = subprocess.check_output('cat /etc/hostname',shell=True,universal_newlines=True)
+
 
 with open('/etc/hosts','a+') as f:
 
-   f.write('\n'+ ip_dc2 +' '+host_n+'.'+ domain +' '+host_n)
-   f.write('\n' + ip_dc1 + ' ' + host_pdc+'.' + domain + ' '+host_pdc)
+   f.write('\n' + ip_dc2 +' '+host_n+'.'+ domain +' '+host_n)
+   f.write('\n' + ip_dc1 +' ' + host_pdc+'.' + domain + ' '+host_pdc)
    f.close()
-
-
-
 ########### transfer file hosts
 
 print('copy file hosts to PDC')

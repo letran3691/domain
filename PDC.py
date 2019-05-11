@@ -18,7 +18,7 @@ host_n = subprocess.check_output('cat /etc/hostname',shell=True,universal_newlin
 print('\nExample domain : domain.local')
 domain = input('Enter domain name : ')
 
-with open('hosts','a+') as f:
+with open('/etc/hosts','a+') as f:
 
    f.write('\n'+ ip +' '+ host_n+'.'+ domain +' '+host_n)
    f.close()
