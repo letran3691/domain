@@ -145,8 +145,14 @@ time.sleep(7)
 
 #### install packet basic
 
-os.system('yum groups -y install "Development Tools" ')
-os.system('yum -y install iniparser libldb libtalloc libtdb libtevent python-devel gnutls-devel libacl-devel openldap-devel pam-devel readline-devel krb5-devel cups-devel')
+
+os.system('yum -y install perl gcc libacl-devel libblkid-devel gnutls-devel readline-devel python-devel gdb pkgconfig krb5-workstation zlib-devel setroubleshoot-server libaio-devel setroubleshoot-plugins policycoreutils-python libsemanage-python setools-libs-python setools-libs popt-devel libpcap-devel sqlite-devel libidn-devel libxml2-devel libacl-devel libsepol-devel libattr-devel keyutils-libs-devel cyrus-sasl-devel cups-devel bind-utils libxslt docbook-style-xsl openldap-devel pam-devel bzip2 wget')
+
+
+print('\ninstall krb5')
+time.sleep(3)
+
+os.system('yum -y install authconfig krb5-workstation')
 
 
 ###### dowload samba4
@@ -165,6 +171,7 @@ time.sleep(3)
 
 os.system('cd /root/samba-4.6.0 && ./configure --enable-debug --enable-selftest --with-ads --with-systemd --with-winbind')
 
+
 ############ make and install
 
 os.system('cd samba-4.6.0 && make && make install ')
@@ -175,13 +182,6 @@ with open('/etc/resolv.conf','w') as f2:
     f2.write('\nsearch '+ domain )
     f2.write('\nnameserver ' + ip_dc1)
     f2.close()
-
-
-
-print('\ninstall krb5')
-time.sleep(3)
-
-os.system('yum -y install authconfig krb5-workstation')
 
 
 ## remove file created when install samba
