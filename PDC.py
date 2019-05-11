@@ -8,8 +8,6 @@ with fileinput.FileInput('/etc/selinux/config', inplace=True,backup='.bak') as  
        print(line.replace('SELINUX=enforcing','SELINUX=disabled'),end='')
     f1.close()
 
-host_bdc = input('Enter hostname BDC: ')
-
 ip = input('enter ip PDC: ')
 
 print('Example Enter Netmask: 8 16 24')
@@ -19,8 +17,8 @@ netmask = input('Enter Netmask: ')
 host_n = subprocess.check_output('cat /etc/hostname',shell=True,universal_newlines=True)
 
 
-# print('Example host : domain.local')
-# host = input('Enter host: ')
+print('Example domain : domain.local')
+
 
 domain = input('Enter domain name : ')
 
@@ -125,9 +123,11 @@ else:
 
 #### restart network
 
+print('restart network')
+
 os.system('systemctl restart network')
 
-time.sleep(7)
+time.sleep(4)
 
 ##### install epel-release
 
@@ -180,7 +180,7 @@ with fileinput.FileInput('/etc/krb5.conf', inplace=True,backup='.bak') as  f2:
 
 #### domain provision
 
-print('Password Administrator > 7 characters'.upper())
+print('\nPassword Administrator > 7 characters'.upper())
 
 time.sleep(5)
 
@@ -194,7 +194,7 @@ os.system('cp /usr/local/samba/bin/samba-tool /usr/sbin/')
 os.system('systemctl enable samba && systemctl start samba')
 
 
-print('switch BDC to install')
+print('\nswitch BDC to install')
 
 time.sleep(30)
 
@@ -211,6 +211,8 @@ os.system('tdbbackup -s .bak /usr/local/samba/private/idmap.ldb')
 ######################################################################################################################
 
 ### copy file imap.ldb.bak to DC2
+
+host_bdc = input('Enter hostname BDC: ')
 
 
 os.system('scp -r /usr/local/samba/private/idmap.ldb.bak root@'+host_bdc+'.'+domain+':/var/lib/samba/private/idmap.ldb ')

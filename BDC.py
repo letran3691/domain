@@ -14,6 +14,7 @@ domain = input('Enter domain : ')
 a = domain.split('.')[0]
 
 ip_dc1 = input('Enter ip dc1 : ')
+
 host_pdc = input('Enter hostname PDC: ')
 
 host_n = subprocess.check_output('cat /etc/hostname',shell=True,universal_newlines=True)
@@ -123,7 +124,7 @@ else:
 
 os.system('systemctl restart network')
 
-print('\nprepare install.......')
+print('\nprepare install.......\n')
 
 time.sleep(7)
 
@@ -148,7 +149,7 @@ os.system('tar -zxvf samba-4.6.0.tar.gz')
 
 print('\n Begin compile')
 
-time.sleep()
+time.sleep(3)
 
 os.system('''cd samba-4.6.0 && ./configure \
 --prefix=/usr \
