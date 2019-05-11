@@ -3,11 +3,10 @@
 import os,time,subprocess,fileinput
 
 ip_dc2 = input('Enter ip dc2 : ')
-
-host_n = input('\nEnter hostname BDC: ')
-
 print('\nExample Enter Netmask: 8 16 24')
 netmask = input('Enter Netmask : ')
+
+host_n = input('\nEnter hostname BDC: ')
 
 print('\nExample domain : domain.local')
 domain = input('Enter domain : ')
@@ -207,7 +206,7 @@ os.system('klist')
 
 
 ###add the server to the existing domain
-
+os.system('cp /usr/local/samba/bin/samba-tool /usr/sbin/')
 
 os.system('samba-tool domain join '+domain+'  DC -U"'+a+'\\administrator" --dns-backend=SAMBA_INTERNAL')
 
@@ -224,7 +223,6 @@ input('Enter to continue.....')
 
 #################################################################
 
-os.system('cp /usr/local/samba/bin/samba-tool /usr/sbin/')
 
 os.system('systemctl enable samba &&  systemctl start samba')
 
