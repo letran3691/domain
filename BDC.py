@@ -28,7 +28,7 @@ with open('/etc/hosts','a+') as f:
    f.close()
 ########### transfer file hosts
 
-print('Copy file hosts to Primary DC')
+print('\nCopy file hosts to Primary DC\n')
 
 time.sleep(3)
 
@@ -240,7 +240,7 @@ print('\n4: Switch Primary DC press Enter')
 
 time.sleep(30)
 
-input('Enter to continue.....')
+input('Enter to continue.....\n')
 
 ###################################################################
 

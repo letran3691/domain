@@ -186,6 +186,8 @@ os.system('cp domain/samba.service /etc/systemd/system/samba.service')
 
 os.system('cp /usr/local/samba/bin/samba-tool /usr/sbin/')
 
+print('\nRestart and enable samba service\n')
+
 os.system('systemctl enable samba && systemctl start samba')
 
 
