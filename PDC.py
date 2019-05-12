@@ -65,8 +65,8 @@ if bool(eth_) == True:
         f1.write('\nIPADDR=' + ip)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
-        f1.write('\nDNS1=' + ip)
-        f1.write('\nDNS2=8.8.8.8')
+        f1.write('\nDNS1=127.0.0.1')
+        f1.write('\n#DNS2=8.8.8.8')
         f1.close()
 
 elif bool(eno_) == True:
@@ -80,8 +80,8 @@ elif bool(eno_) == True:
         f1.write('\nIPADDR='+ip)
         f1.write('\nFREFIX='+netmask)
         f1.write('\nGATEWAY='+gw)
-        f1.write('\nDNS1='+ ip)
-        f1.write('\nDNS2=8.8.8.8')
+        f1.write('\nDNS1=127.0.0.1')
+        f1.write('\n#DNS2=8.8.8.8')
         f1.close()
 
 elif bool(em_ )== True:
@@ -95,8 +95,8 @@ elif bool(em_ )== True:
         f1.write('\nIPADDR=' + ip)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
-        f1.write('\nDNS1=' + ip)
-        f1.write('\nDNS2=8.8.8.8')
+        f1.write('\nDNS1=127.0.0.1')
+        f1.write('\n#DNS2=8.8.8.8')
         f1.close()
 
 elif bool(ens_ )== True:
@@ -110,8 +110,8 @@ elif bool(ens_ )== True:
         f1.write('\nIPADDR=' + ip)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
-        f1.write('\nDNS1=' + ip)
-        f1.write('\nDNS2=8.8.8.8')
+        f1.write('\nDNS1=127.0.0.1')
+        f1.write('\n#DNS2=8.8.8.8')
         f1.close()
 
 else:
@@ -135,7 +135,7 @@ print('\nInstall packets need for samba4')
 
 time.sleep(3)
 
-os.system('yum -y install perl gcc libacl-devel libblkid-devel gnutls-devel readline-devel python-devel gdb pkgconfig krb5-workstation zlib-devel setroubleshoot-server libaio-devel setroubleshoot-plugins policycoreutils-python libsemanage-python setools-libs-python setools-libs popt-devel libpcap-devel sqlite-devel libidn-devel libxml2-devel libacl-devel libsepol-devel libattr-devel keyutils-libs-devel cyrus-sasl-devel cups-devel bind-utils libxslt docbook-style-xsl openldap-devel pam-devel bzip2 wget')
+os.system('yum -y install perl gcc libacl-devel libblkid-devel gnutls-devel readline-devel python-devel gdb pkgconfig krb5-workstation zlib-devel setroubleshoot-server libaio-devel setroubleshoot-plugins policycoreutils-python libsemanage-python setools-libs-python setools-libs popt-devel libpcap-devel sqlite-devel libidn-devel libxml2-devel libacl-devel libsepol-devel libattr-devel keyutils-libs-devel cyrus-sasl-devel cups-devel bind-utils libxslt docbook-style-xsl openldap-devel pam-devel bzip2 wget install tdb-tools')
 
 #### dowload samba4
 
@@ -186,6 +186,16 @@ os.system('cp domain/samba.service /etc/systemd/system/samba.service')
 
 os.system('cp /usr/local/samba/bin/samba-tool /usr/sbin/')
 
+##########################################
+a = domain.split('.')[0]
+for line in fileinput.FileInput('/usr/local/samba/etc/smb.conf',inplace=1):
+    if "workgroup = "+a.upper() in line:
+        line=line.replace(line,line+"\tallow dns updates = nonsecure and secure\n")
+    print (line,end='')
+
+#########################################
+
+
 print('\nRestart and enable samba service\n')
 
 os.system('systemctl enable samba && systemctl start samba')
@@ -199,11 +209,6 @@ input('Enter to continue.....')
 
 ##########################################################
 
-print('Install tdb-tools')
-
-time.sleep(3)
-
-os.system('yum -y install tdb-tools')
 
 ### backup file idmap.ldb
 os.system('tdbbackup -s .bak /usr/local/samba/private/idmap.ldb')

@@ -79,7 +79,7 @@ if bool(eth_) == True:
         f1.write('\nIPADDR=' + ip_dc2)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
-        f1.write('\nDNS1=' + ip_dc2)
+        f1.write('\nDNS1=127.0.0.1')
         f1.write('\nDNS2=8.8.8.8')
         f1.close()
 
@@ -94,7 +94,7 @@ elif bool(eno_) == True:
         f1.write('\nIPADDR='+ip_dc2)
         f1.write('\nFREFIX='+netmask)
         f1.write('\nGATEWAY='+gw)
-        f1.write('\nDNS1='+ ip_dc2)
+        f1.write('\nDNS1=127.0.0.1')
         f1.write('\nDNS2=8.8.8.8')
         f1.close()
 
@@ -109,7 +109,7 @@ elif bool(em_ )== True:
         f1.write('\nIPADDR=' + ip_dc2)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
-        f1.write('\nDNS1=' + ip_dc2)
+        f1.write('\nDNS1=127.0.0.1')
         f1.write('\nDNS2=8.8.8.8')
         f1.close()
 
@@ -124,7 +124,7 @@ elif bool(ens_ )== True:
         f1.write('\nIPADDR=' + ip_dc2)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
-        f1.write('\nDNS1=' + ip_dc2)
+        f1.write('\nDNS1=127.0.0.1')
         f1.write('\nDNS2=8.8.8.8')
         f1.close()
 
