@@ -37,7 +37,7 @@ echo 'python3.6 -V'
 
 chmod -R +x /root/domain/*.py
 
-echo "Enter Servername: "
+echo "Enter hostname: "
 read server
 
 echo $server > /etc/hostname
