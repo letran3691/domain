@@ -203,7 +203,7 @@ os.system('systemctl enable samba && systemctl start samba')
 
 print('\n1:Switch Backup DC to install')
 
-time.sleep(50)
+time.sleep(20)
 
 input('Enter to continue.....')
 
@@ -233,7 +233,7 @@ os.system('rm -f /etc/krb5.conf')
 
 print('\n3: Switch Backup DC press Enter ')
 
-time.sleep(30)
+time.sleep(20)
 
 input('\nEnter to continue.....')
 
@@ -262,7 +262,7 @@ os.system('klist')
 
 print('\n5: Switch Backup DC press Enter')
 
-time.sleep(30)
+time.sleep(20)
 
 input('Enter to continue.....')
 

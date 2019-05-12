@@ -217,7 +217,7 @@ os.system('cp domain/samba.service /etc/systemd/system/samba.service')
 
 print('\n2: Switch Primary DC press Enter()')
 
-time.sleep(60)
+time.sleep(30)
 
 input('Enter to continue.....')
 
@@ -227,6 +227,10 @@ input('Enter to continue.....')
 os.system('systemctl enable samba &&  systemctl start samba')
 
 ##################################################################
+
+print('\nCopy file krb5.conf to Primary DC\n')
+
+time.sleep(3)
 
 os.system('scp /etc/krb5.conf root@'+host_pdc+'.'+domain+':/etc/ ')
 
