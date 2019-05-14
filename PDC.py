@@ -116,6 +116,7 @@ elif bool(ens_ )== True:
 
 else:
     print("Dont't have interface")
+    exit(0)
 
 #### restart network
 

@@ -2,22 +2,41 @@
 
 import os,time,subprocess,fileinput
 
+
+with fileinput.FileInput('/etc/selinux/config', inplace=True,backup='.bak') as  f1:
+
+    for line in f1:
+       print(line.replace('SELINUX=enforcing','SELINUX=disabled'),end='')
+    f1.close()
+
+
+print('*'*40)
+
+print('\nInfo Primary Domain Controller')
+print('\n'+'*'*40)
 ip_dc2 = input('Enter ip Backup DC : ')
 print('\nExample Enter Netmask: 8 16 24')
 netmask = input('Enter Netmask : ')
 
 host_n = input('\nEnter hostname Backup DC: ')
 
-print('\nExample domain : domain.local')
-domain = input('Enter domain : ')
+print('\nExample domain : domain.local\n')
+domain = input('Enter domain :')
 
+print('\n'+'*'*40)
 ############ tach chuoi
 
 a = domain.split('.')[0]
 
+print('\nInfo Primary Domain Controller')
+print('\n'+'*'*40)
 ip_dc1 = input('\nEnter ip Primary DC : ')
 
 host_pdc = input('Enter hostname Primary DC: ')
+
+
+print('*'*40)
+exit(0)
 
 #host_n = subprocess.check_output('cat /etc/hostname',shell=True,universal_newlines=True)
 
@@ -131,6 +150,8 @@ elif bool(ens_ )== True:
 else:
     print("Dont't have interface")
 
+    exit(0)
+
 ########### restart network
 
 os.system('systemctl restart network')
@@ -222,6 +243,12 @@ time.sleep(30)
 input('Enter to continue.....')
 
 #################################################################
+
+
+for line in fileinput.FileInput('/usr/local/samba/etc/smb.conf',inplace=1):
+    if "workgroup = "+a.upper() in line:
+        line=line.replace(line,line+"\tallow dns updates = nonsecure and secure\n")
+    print (line,end='')
 
 
 os.system('systemctl enable samba &&  systemctl start samba')

@@ -1,1 +1,1 @@
-# domain
+## Hướng dẫn cài đặt domain con linux(centos7) bằng script
