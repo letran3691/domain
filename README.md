@@ -25,42 +25,39 @@
    
 ### <a name='2'><a/>2. Cài đặt.
 
-#### Để thực hiện việc cài đặt này yêu cầu 2 host làm domain controller phải được cài đặt python3.0 trở lên.
+- Để thực hiện việc cài đặt này yêu cầu 2 host làm domain controller phải được cài đặt python3.0 trở lên.
 
-#### Trước khi bắt đầu các bạn cần đảm bảo 2 host phải được kết nối ra internet.
+- Trước khi bắt đầu các bạn cần đảm bảo 2 host phải được kết nối ra internet.
 
-Việc đầu tiên các bạn cần làm đó là cài đặt git
+    - Việc đầu tiên các bạn cần làm đó là cài đặt git
 
-        yum -y install git
+             yum -y install git
         
-   Việc cài đặt **git** này phải được cài trên cả 2 server.
+    - Việc cài đặt **git** này phải được cài trên cả 2 server.
    
-   Sau khi cài git xong các bạn thực hiện pull repo về
-   
+    - Sau khi cài git xong các bạn thực hiện pull repo về
+    
            git clone https://github.com/letran3691/domain.git
+          
+    - Sau khi clone về các bạn sẽ có 1 thư mục có tên **domain**   
         
-        
-sau khi clone về các bạn sẽ có 1 thư mục có tên **domain**   
-     
-Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC.py**, và **installpython3.6.sh**
+    - Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC.py**, và **installpython3.6.sh**
 
-   File **installpython3.6.sh**: Dùng để cài đặt python3.6
+        - File **installpython3.6.sh**: Dùng để cài đặt python3.6
 
-   File **PDC.py**:Dùng để cài đặt và cấu hình trên Primary domain controller.
+        - File **PDC.py**:Dùng để cài đặt và cấu hình trên Primary domain controller.
      
-   File **BDC.py**: Dùng để cài đăt và cầu hình domain backup(second domain controller) 
+        - File **BDC.py**: Dùng để cài đăt và cầu hình domain backup(second domain controller) 
    
-   
--  Việc đầu tiên là phải phân quyền cho file  **installpython3.6.sh** 
+    -  Việc đầu tiên là phải phân quyền cho file  **installpython3.6.sh** 
         
             chmod +x domain/installpython3.6.sh
          
- -  sau khi phân quyên xong các bạn thực hiện chạy file installpython3.6.sh này bằng lệnh:
- 
-            ./domain/installpython3.6.sh
-        
-        
-   ![image](https://user-images.githubusercontent.com/19284401/57705211-a0b20b80-768d-11e9-92ea-b5d20b9606b0.png)
+    -  Sau khi phân quyên xong các bạn thực hiện chạy file installpython3.6.sh này bằng lệnh:
+
+                    ./domain/installpython3.6.sh
+                    
+         ![image](https://user-images.githubusercontent.com/19284401/57705211-a0b20b80-768d-11e9-92ea-b5d20b9606b0.png)
 
    - Quá trình cài đặt python3.6 bắt đầu (trong quá trình cài đặt, thực hiện đến bước nào thì sẽ có thông báo ở màn hình cho các bạn nắm được).
    
@@ -80,13 +77,12 @@ Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC
 
 -  **Primary domain controller**
    
-   - sau khi cài đặt xong python3.6 giờ, giờ các bạn chạy file **PDC.py** để cấu hình primary domain controller
+      - Sau khi cài đặt xong python3.6 giờ, giờ các bạn chạy file **PDC.py** để cấu hình primary domain controller
    
-            python3.6 domain/PDC.py
-            
-            
-   - Việc đầu tiên các bạn được hỏi là nhập IP, subnetmask cho Primary DC, và nhập tên domain
-        [image](https://user-images.githubusercontent.com/19284401/57743834-e48a2c80-76f0-11e9-90bf-e96b1566bf3a.png)
+                 python3.6 domain/PDC.py
+                 
+      - Việc đầu tiên các bạn được hỏi là nhập IP, subnetmask cho Primary DC, và nhập tên domain
+            ![image](https://user-images.githubusercontent.com/19284401/57743834-e48a2c80-76f0-11e9-90bf-e96b1566bf3a.png)
 
         - Ở đây mình làm LAB nên mình lấy luôn IP từ DHCP cấp, trong thực tế các bạn nên đặt IP sao cho dễ quản lý.
    
@@ -100,17 +96,17 @@ Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC
 
    - Mẹo nhỏ giúp các bạn ko phải trờ đợi quá lâu khi PDC compile và install thì các bạn hãy qua BDC thực hiện chạy file cài đặt.
 
-   **Chú ý**: Dể để PDC thực hiên compile xong khoảng hơn 2k/4k thì hay thực hiên các bước dưới đây, để đảm bảo quá trình cài đặt và cấu hình diễn ra đúng thứ tự.
+        **- Chú ý**: Dể để PDC thực hiên compile xong khoảng hơn 2k/4k thì hay thực hiên các bước dưới đây, để đảm bảo quá trình cài đặt và cấu hình diễn ra đúng thứ tự.
             ![image](https://user-images.githubusercontent.com/19284401/57747163-819f9200-76fe-11e9-8380-bb034469b843.png)
 
--  **Backup domain controller**
+- **Backup domain controller**
 
-        python3.6 domain/BDC.py
+                    python3.6 domain/BDC.py
 
     - Khi chạy file này các bạn cũng sẽ được yêu cầu nhập các thông tin cần thiết cho qua trình cấu hình.
         ![image](https://user-images.githubusercontent.com/19284401/57744478-94f93000-76f3-11e9-8d05-fda9231d7131.png)
 
-- BDC sẽ copy file hosts sang PDC
+    - BDC sẽ copy file hosts sang PDC
 
     ![image](https://user-images.githubusercontent.com/19284401/57744450-78f58e80-76f3-11e9-85db-d3b8c943061b.png)
  
