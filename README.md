@@ -127,14 +127,17 @@
         - DNS forward: Nếu các bạn có DNS server riêng thì nhập IP của DNS server đó, còn không thì các bạn nhập IP của router có khả năng phần giải DNS public. Đơn giản hơn các bạn nhập 8.8.8.8
         
      - Cấu hình xem các bạn sẽ nhận được thông báo sau.
+     
         ![image](https://user-images.githubusercontent.com/19284401/57746221-777b9480-76fa-11e9-96a5-a08d2ef27561.png)
         
     - **Chuyển qua BDC.**
     
      - Sau khi cài đặt samba xong thì nó sẽ hỏi yêu cầu bạn nhập password của Administrator domain mà bạn vừa nhập bên PDC.
+     
        ![image](https://user-images.githubusercontent.com/19284401/57746247-9712bd00-76fa-11e9-8fbb-dd7678853b0c.png)
 
      - Nhập password xong nhấn Enter các bạn sẽ có 1 thông báo về thời gian hết hạn password của Administrator như trong hình và yêu cầu bạn nhập lại password admin lần nữa.
+     
        ![image](https://user-images.githubusercontent.com/19284401/57746330-ec4ece80-76fa-11e9-8af7-e2c0b6614af8.png)
     
      - Sau khi nhấp pasword lần 2 thì BDC sẽ thực hiện cấu hình và join vào domain vừa tạo từ PDC. Đồng thời sẽ có lời nhắc bạn sang PDC nhấn Enter.
