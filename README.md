@@ -2,14 +2,14 @@
 
 ---------------------------------------------
 
-### [1 Đôi lời chia sẻ](#1)
-### [2. Cài đặt](#2)
-#### [2.1 Cài đặt](#2.1)
-#### [2.2 Cài đặt](#2.2)
-#### [2.3 Cài đặt](#2.3)
-#### [2.4 Cài đặt](#2.4)
-### [3 Liên hệ](#3)
-#### [3.1 Tham khảo](#3.1)
+#### [1 Đôi lời chia sẻ](#1)
+#### [2. Cài đặt](#2)
+- [2.1 Cài đặt](#2.1)
+- [2.2 Cài đặt](#2.2)
+- [2.3 Cài đặt](#2.3)
+- [2.4 Cài đặt](#2.4)
+#### [3 Liên hệ](#3)
+- [3.1 Tham khảo](#3.1)
 
 
 ---------------------------------------------
@@ -277,10 +277,21 @@
    
 --------------------------------------------------------------------------------------   
                 
-            
-### <a name=3><a/>3. Liên hệ
+       
 
-#### <a name=3.1><a/>3.1 Tham khảo
+#### <a name=3><a/>3 Tham khảo
+    
+   1. https://www.howtoforge.com/tutorial/samba-4-with-active-directory-on-centos-7-rpm-based-installation-with-share-support/
+
+   2. https://www.howtoforge.com/tutorial/samba-4-additional-domain-controller-for-failover-replication-on-centos-7/
+   
+   3. https://www.golinuxhub.com/2014/02/how-to-configure-samba-4-secondary.html
+
+   4. https://www.tecmint.com/manage-samba4-dns-group-policy-from-windows/
+
+#### <a name=3.1><a/>3.1 Liên hệ
+
+<a href="https://www.facebook.com/trunglv.91" rel="nofollow">Facebook<a>
      
     
     
