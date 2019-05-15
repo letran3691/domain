@@ -75,14 +75,104 @@ Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC
         
         
    - **Chú ý:** Các bạn tránh nhầm lẫn việc đặt hostname cho PDC vs BDC nhé, đây là 2 hostname cho 2 host các nhau không được đặt trùng.
+   
+   
+   - sau khi cài đặt xong python3.6 giờ, giờ các bạn chạy file **PDC.py** để cấu hình primary domain controller
+   
+            python3.6 domain/PDC.py
+            
+            
+   - Việc đầu tiên các bạn được hỏi là nhập IP, subnetmask cho Primary DC, và nhập tên domain
+   
+   ![image](https://user-images.githubusercontent.com/19284401/57743834-e48a2c80-76f0-11e9-90bf-e96b1566bf3a.png)
+
+   - Ở đây mình làm LAB nên mình lấy luôn IP từ DHCP cấp, trong thực tế các bạn nên đặt IP sao cho dễ quản lý.
+   - Nhập subnetmask chính xác với hệ thống mạng của các bạn 
+   - domain name: Là tên dommain sẽ được dựng trong hệ thống này.
+- Sau khi nhập xong các thông tin trên script sẽ tự động cấu hình và restart lại network (các bạn chú ý giúp mình là file cấu hình card mạng cứ để mặc định khi mới cài đặt os nhé, tránh thay đổi dẫn đến việc file script cấu hình sai thông tin).
+
+- Quá trình cài đặt packet  và compile bắt đầu(việc này diễn ra nhanh hay chậm tùy thuộc vào cấu hình phần cứng của host).
+
+- mẹo nhỏ giúp các bạn ko phải trời đợi quá lâu khi PDC compile và install thì các bạn hay qua BDC thực hiện chạy file cài đặt.
+
+**Chú ý**: Dể để PDC thực hiên compile xong khoảng hơn 2k/4k thì hay thực hiên các bước dưới đây, để đảm bảo quá trình cài đặt và cấu hình diễn ra đúng thứ tự.
+        ![image](https://user-images.githubusercontent.com/19284401/57747163-819f9200-76fe-11e9-8380-bb034469b843.png)
+
+
+
+
+### Backup domain controller
+
+        python3.6 domain/BDC.py
+        
+        
+- Khi chạy file này các bạn cũng sẽ được yêu cầu nhập các thông tin cần thiết cho qua trình cấu hình.
+    ![image](https://user-images.githubusercontent.com/19284401/57744478-94f93000-76f3-11e9-8d05-fda9231d7131.png)
+
+- BDC sẽ copy file hosts sang PDC
+
+   ![image](https://user-images.githubusercontent.com/19284401/57744450-78f58e80-76f3-11e9-85db-d3b8c943061b.png)
+ 
+    - Các bạn bạn nhập yes rồi nhập password của root bên PDC.
+    
+- sau khi copy file hosts xong, quá trình dowload và cài đặt samba bắt đầu. thực hiên đến bước nào sẽ được in ra màn hình để các bạn nắm được.
+
+### quay lại PDC
+
+- Quá trình cài đặt samba hoàn tất các bạn sẽ có lời nhắc như trong hình
+        ![image](https://user-images.githubusercontent.com/19284401/57746185-4a2ee680-76fa-11e9-8424-f26be70272f2.png)
+        
+- Cấu hình xem các bạn sẽ nhận được thông báo sau.
+        ![image](https://user-images.githubusercontent.com/19284401/57746221-777b9480-76fa-11e9-96a5-a08d2ef27561.png)
+### chuyển qua BDC.
+    
+ - sau khi cài đặt samba xong thì nó sẽ hỏi yêu cầu bạn nhập password của Administrator domain mà bạn vừa nhập bên PDC.
+    ![image](https://user-images.githubusercontent.com/19284401/57746247-9712bd00-76fa-11e9-8fbb-dd7678853b0c.png)
+
+    - nhập password xong nhấn Enter các bạn sẽ có 1 thông báo về thời gian hết hạn password của Administrator như trong hình và yêu cầu bạn nhập lại password admin lần nữa.
+    ![image](https://user-images.githubusercontent.com/19284401/57746330-ec4ece80-76fa-11e9-8af7-e2c0b6614af8.png)
+    
+    - Sau khi nhấp pasword lần 2 thì BDC sẽ thực hiện cấu hình và join vào domain vừa tạo từ PDC. Đồng thời sẽ có lời nhắc bạn sang PDC nhấn Enter.
+    
+        ![image](https://user-images.githubusercontent.com/19284401/57746453-77c85f80-76fb-11e9-99ee-174f674bb4d7.png)
+        
+### sang PDC
+
+sau khi nhấn Enter các bạn sẽ được yêu cầu nhập hostname của BDC.
+    ![image](https://user-images.githubusercontent.com/19284401/57746567-f0c7b700-76fb-11e9-97ea-870028700a47.png)
+    
+   - các bạn nhập hostname -> yes > nhâp password root của BDC rồi Enter.
+   
+   
+   
+   
+   - Chú ý: các bạn đừng để màn hình chờ nhập password quá lâu sẽ dễ đến mất kết nối và gây ra lỗi.
+   
+   
+
+
+
+        
+
 
     
+ 
+            
+        
+
+
+    
+    
+    
+        
+
+      
    
-           
+   
 
-         
- # Đang update.....           
-
+   
+    
+  
         
    
    

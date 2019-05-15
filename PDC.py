@@ -2,11 +2,11 @@
 
 import os,time,subprocess,fileinput,sys
 
-with fileinput.FileInput('/etc/selinux/config', inplace=True,backup='.bak') as  f1:
-
-    for line in f1:
-       print(line.replace('SELINUX=enforcing','SELINUX=disabled'),end='')
-    f1.close()
+# with fileinput.FileInput('/etc/selinux/config', inplace=True,backup='.bak') as  f1:
+#
+#     for line in f1:
+#        print(line.replace('SELINUX=enforcing','SELINUX=disabled'),end='')
+#     f1.close()
 
 ip = input('\nEnter ip Primary DC: ')
 print('Example Enter Netmask: 8 16 24')
@@ -14,14 +14,18 @@ netmask = input('Enter Netmask: ')
 
 host_n = subprocess.check_output('cat /etc/hostname',shell=True,universal_newlines=True)
 
+host =host_n.rstrip('\n')
+
 
 print('\nExample domain : domain.local')
 domain = input('Enter domain name : ')
 
 with open('/etc/hosts','a+') as f:
 
-   f.write('\n'+ ip +' '+ host_n+'.'+ domain +' '+host_n)
+   f.write('\n'+ ip +' '+ host+'.'+ domain +' '+host)
    f.close()
+
+exit(0)
 
 gw = os.popen("ip route |grep default | awk '{print $3}'").read()
 

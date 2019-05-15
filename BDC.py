@@ -38,12 +38,14 @@ host_pdc = input('Enter hostname Primary DC: ')
 print('*'*40)
 exit(0)
 
-#host_n = subprocess.check_output('cat /etc/hostname',shell=True,universal_newlines=True)
+host_n = subprocess.check_output('cat /etc/hostname',shell=True,universal_newlines=True)
+
+host =host_n.rstrip('\n')
 
 with open('/etc/hosts','a+') as f:
 
    f.write('\n' + ip_dc1 +' ' + host_pdc+'.' + domain + ' '+host_pdc)
-   f.write('\n' + ip_dc2 + ' ' + host_n + '.' + domain + ' ' + host_n)
+   f.write('\n' + ip_dc2 + ' ' + host + '.' + domain + ' ' + host)
    f.close()
 ########### transfer file hosts
 
