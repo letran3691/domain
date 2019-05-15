@@ -268,6 +268,8 @@
    - Mở DNS lên.
 
         ![image](https://user-images.githubusercontent.com/19284401/57750018-adc11000-770a-11e9-86a2-10660e19a6ef.png)
+        
+   - Phần cấu hình DNS **Reverse Lookup Zone** các bạn tự thực hiện nốt nhé.      
 
    - Hãy nhập domain vào sau đó nhấn ok 
    
