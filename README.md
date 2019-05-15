@@ -1,9 +1,18 @@
-## Mục lục.
+## Mục lục
 
-### [1 Lời nói đầu](#1)
+---------------------------------------------
 
+### [1 Đôi lời chia sẻ](#1)
 ### [2. Cài đặt](#2)
+#### [2.1 Cài đặt](#2.1)
+#### [2.2 Cài đặt](#2.2)
+#### [2.3 Cài đặt](#2.3)
+#### [2.4 Cài đặt](#2.4)
+### [3 Liên hệ](#3)
+#### [3.1 Tham khảo](#3.1)
 
+
+---------------------------------------------
 ### <a name="1"><a/>1. Đôi lời chia sẻ.
     
  - Khái niệm domain controller có sẽ đã quá quen thuộc với các bạn, nên mình cũng không cần giới thiệu thêm.
@@ -24,6 +33,8 @@
   
    
 ### <a name='2'><a/>2. Cài đặt.
+
+#### <a name='2.1'><a/>2.1 Cài đặt.
 
 - Để thực hiện việc cài đặt này yêu cầu 2 host làm domain controller phải được cài đặt python3.0 trở lên.
 
@@ -73,7 +84,9 @@
         - **Chú ý:** Các bạn tránh nhầm lẫn việc đặt hostname cho PDC vs BDC nhé, đây là 2 hostname cho 2 host các nhau không được đặt trùng.
    
    
-#### <a name=2.1><a/>2.1 Cài đặt-cấu hình domain 
+#### <a name=2.2><a/>2.2 Cài đặt-cấu hình domain 
+
+
 
 -  **Primary domain controller**
    
@@ -193,7 +206,7 @@
 
     - Quá trình cài đặt và cấu hình domain đã xong
 
-#### <a name=2.2><a/>2.2 Test đồng bộ
+#### <a name=2.3><a/>2.3 Test đồng bộ
 
    - Hiển thị các user đang có trong domain.
             
@@ -231,7 +244,7 @@
  
     - Ok như vậy là việc đồng bộ dữ liệu giữa 2 DC không có vấn đề gì. Giờ ta đi đến cấu hình DNS.
  
-#### <a name=2.3><a/>2.3 Cấu hình DNS
+#### <a name=2.4><a/>2.4 Cấu hình DNS
 
    - Kiếm 1 con máy win clien nào đó join vào domain thôi.
 
@@ -256,10 +269,18 @@
 
         ![image](https://user-images.githubusercontent.com/19284401/57750018-adc11000-770a-11e9-86a2-10660e19a6ef.png)
 
-   - Hãy nhập domain vào sau đó nhấn ok    
+   - Hãy nhập domain vào sau đó nhấn ok 
+   
+   - Cách quản lý domain bgio thì không khác gì các bạn quản lý trên winserver cả.
+   
+   OK bài viết đến đây là hết rồi, chúc các bạn thành công.
+   
+--------------------------------------------------------------------------------------   
                 
             
+### <a name=3><a/>3. Liên hệ
 
+#### <a name=3.1><a/>3.1 Tham khảo
      
     
     
