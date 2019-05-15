@@ -2,11 +2,11 @@
 
 import os,time,subprocess,fileinput,sys
 
-# with fileinput.FileInput('/etc/selinux/config', inplace=True,backup='.bak') as  f1:
-#
-#     for line in f1:
-#        print(line.replace('SELINUX=enforcing','SELINUX=disabled'),end='')
-#     f1.close()
+with fileinput.FileInput('/etc/selinux/config', inplace=True,backup='.bak') as  f1:
+
+    for line in f1:
+       print(line.replace('SELINUX=enforcing','SELINUX=disabled'),end='')
+    f1.close()
 
 ip = input('\nEnter ip Primary DC: ')
 print('Example Enter Netmask: 8 16 24')
@@ -276,6 +276,10 @@ input('Enter to continue.....')
 print('Backup DC showrepl done')
 
 os.system('/usr/local/samba/bin/samba-tool drs showrepl')
+
+print('\n7: Switch Backup DC press Enter')
+
+time.sleep(3)
 
 print('Install and config done!!!! reboot after 5s')
 

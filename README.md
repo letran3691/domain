@@ -122,6 +122,12 @@ Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC
 - Quá trình cài đặt samba hoàn tất các bạn sẽ có lời nhắc như trong hình
         ![image](https://user-images.githubusercontent.com/19284401/57746185-4a2ee680-76fa-11e9-8424-f26be70272f2.png)
         
+        - Realm: Các bạn để mặc định và nhấn Enter
+        - Domain: Để mặc định và Enter
+        - Server Role: Để mặc đinh và Enter
+        - DNS backend: Để mặc đinh và Enter
+        - DNS forward: Nếu các bạn có DNS server riêng thì nhập IP của DNS server đó, còn không thì các bạn nhập IP của router có khả năng phần giải DNS public. Đơn giản hơn các bạn nhập 8.8.8.8
+        
 - Cấu hình xem các bạn sẽ nhận được thông báo sau.
         ![image](https://user-images.githubusercontent.com/19284401/57746221-777b9480-76fa-11e9-96a5-a08d2ef27561.png)
 ### chuyển qua BDC.
@@ -139,14 +145,132 @@ Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC
 ### sang PDC
 
 sau khi nhấn Enter các bạn sẽ được yêu cầu nhập hostname của BDC.
-    ![image](https://user-images.githubusercontent.com/19284401/57746567-f0c7b700-76fb-11e9-97ea-870028700a47.png)
-    
+    ![image](https://user-images.githubusercontent.com/19284401/57747693-de9c4780-7700-11e9-8edb-956db4adb085.png)
+        _- Chú ý: các bạn đừng để màn hình chờ nhập password quá lâu sẽ dễ đến mất kết nối và gây ra lỗi._
+   
    - các bạn nhập hostname -> yes > nhâp password root của BDC rồi Enter.
+   - Thông báo chuyển qua BDC để Enter
+#### sang BDC
+![image](https://user-images.githubusercontent.com/19284401/57747767-291dc400-7701-11e9-80c4-05156c705299.png)
+Chú ý: Hãy đợi xuất hiện thông báo **Enter to continue** thì hay Enter.
+sau khi Enter sẽ có yêu cầu bạn nhập password root PDC để copy file và thông báo chuyển qua PDC để Enter.
+![image](https://user-images.githubusercontent.com/19284401/57747887-a0535800-7701-11e9-975b-52f227a7b6b2.png)
+
+### sang PDC
+
+sau khi Enter các bạn sẽ được yêu cầu nhập password admin domain và chuyển qua BDC để enter.
+![image](https://user-images.githubusercontent.com/19284401/57747968-0213c200-7702-11e9-88ed-663bfaa21353.png)
+
+### sang BDC
+- Nhấn Enter các bạn sẽ thấy 1 bảng thông báo về việc đồng bộ dữ liệu giữa 2 DC và yêu cầu chuyển sang PDC để Enter. 
+![image](https://user-images.githubusercontent.com/19284401/57748059-7f3f3700-7702-11e9-8611-6dc010891a7b.png)
+![image](https://user-images.githubusercontent.com/19284401/57748102-b1509900-7702-11e9-8e79-5c021dfdffd9.png)
+
+### sang PDC
+- Tương tự như ở BDC sẽ có 1 bảng thông báo về việc đông bộ giữa 2 DC và thông báo chuyển qua BDC để enter. Đồng thời host sẽ tự động reboot.
+![image](https://user-images.githubusercontent.com/19284401/57748334-b82bdb80-7703-11e9-9943-f93e84db6eb0.png)
+![image](https://user-images.githubusercontent.com/19284401/57748306-903c7800-7703-11e9-8094-0d95a3dad9c7.png)
+
+
+- Chú ý: Các bạn cần kiểm tra  phần  **0 consecutive failure(s)** để xem có xảy ra lỗi gì ko
+
+### sang BDC
+Enter host sẽ tự động reboot.
+![image](https://user-images.githubusercontent.com/19284401/57748368-e27d9900-7703-11e9-9110-93a42ce3d89c.png)
+
+##### quá trình cài đặt và cấu hình domain đã xong
+
+### Test đồng bộ user giữa 2 DC
+- Hiển thị các user đang có trong domain.
+            
+            samba-tool user list
+            
+            
+   ![image](https://user-images.githubusercontent.com/19284401/57748820-ac411900-7705-11e9-9d83-0f00e4cc4dab.png)
+    
+    
+- Tạo user
+
+            samba-tool user create test
+            
+    ![image](https://user-images.githubusercontent.com/19284401/57748845-d4c91300-7705-11e9-9220-4e7ddb8fac7a.png)
+    
+   Chú ý: phần nhập password mặc định vẫn là >7 ký tự và yêu cầu độ phực tạp nhé (123456a@)
+   
+ - Hiển thị các user đang có trong domain trên cả 2 DC.
+            
+            samba-tool user list
+            
+      ![image](https://user-images.githubusercontent.com/19284401/57748943-41dca880-7706-11e9-8373-30af85935666.png)
+      
+      
+-  Đứng trên BDC để xóa user "test"   
+        
+        samba-tool user delete test
+        
+![image](https://user-images.githubusercontent.com/19284401/57748989-72bcdd80-7706-11e9-80c9-c0e386193ac9.png)
+
+- Kiểm tra lại đồng bộ giữa 2 DC
+
+            samba-tool user list
+
+ ![image](https://user-images.githubusercontent.com/19284401/57749029-9b44d780-7706-11e9-9d95-b4b98ddabc2b.png)
+ 
+ - Ok như vậy là việc đồng bộ dữ liệu giữa 2 DC không có vấn đề gì. Giờ ta đi đến cấu hình DNS.
+ 
+#### DNS 
+
+- Kiếm 1 con máy win clien nào đó join vào domain thôi.
+
+![image](https://user-images.githubusercontent.com/19284401/57749236-6e44f480-7707-11e9-9a55-2f5afec96ac9.png)
+
+- Việc join clien vào domain thì mình ko cẩn phải nó thêm nữa 
+![image](https://user-images.githubusercontent.com/19284401/57749307-ba903480-7707-11e9-9a3c-c9d38999a6fd.png)
+![image](https://user-images.githubusercontent.com/19284401/57749685-48205400-7709-11e9-956e-8926ccb1d31a.png)
+
+- Sau khi jon domain xong các bạn dowload RSAT về và cài đặt trên máy vừa join domain.
+
+    https://www.microsoft.com/en-us/download/details.aspx?id=7887 (đây là cho win 7)
+
+- sau khi cài đặt xong các bạn vào **Turn Windows Features** để bật nó lên
+    ![image](https://user-images.githubusercontent.com/19284401/57749898-30959b00-770a-11e9-8773-5e2f8e1e77b6.png)
+    
+Sau đó vào
+ 
+            Control Panel\System and Security\Administrative Tools
+            
+- Mở DNS lên.
+    ![image](https://user-images.githubusercontent.com/19284401/57750018-adc11000-770a-11e9-86a2-10660e19a6ef.png)
+
+- Hãy nhập domain vào sau đó nhấn ok    
+                
+            
+
+     
+    
+    
+    
+
+
+ 
+ 
+
+            
+            
+    
+            
+
+
+
+
+
+
+
+
+
    
    
-   
-   
-   - Chú ý: các bạn đừng để màn hình chờ nhập password quá lâu sẽ dễ đến mất kết nối và gây ra lỗi.
+    
    
    
 

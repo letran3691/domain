@@ -160,13 +160,12 @@ os.system('systemctl restart network')
 
 print('\nPrepare install.......\n')
 
-time.sleep(7)
+time.sleep(5)
 
 
 #os.system('yum  –y  install epel-release && yum –y update')
 
 #### install packet basic
-
 
 os.system('yum -y install perl gcc libacl-devel libblkid-devel gnutls-devel readline-devel python-devel gdb pkgconfig krb5-workstation zlib-devel setroubleshoot-server libaio-devel setroubleshoot-plugins policycoreutils-python libsemanage-python setools-libs-python setools-libs popt-devel libpcap-devel sqlite-devel libidn-devel libxml2-devel libacl-devel libsepol-devel libattr-devel keyutils-libs-devel cyrus-sasl-devel cups-devel bind-utils libxslt docbook-style-xsl openldap-devel pam-devel bzip2 wget')
 
