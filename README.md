@@ -96,6 +96,8 @@
                  
       - Việc đầu tiên các bạn được hỏi là nhập IP, subnetmask cho Primary DC, và nhập tên domain
             ![image](https://user-images.githubusercontent.com/19284401/57743834-e48a2c80-76f0-11e9-90bf-e96b1566bf3a.png)
+            
+           - Sau khi nhập các thông tin xong, bạn nào bị thông báo lỗi **Dont't have interface** thì pm mình để mình update interface nhé.
 
         - Ở đây mình làm LAB nên mình lấy luôn IP từ DHCP cấp, trong thực tế các bạn nên đặt IP sao cho dễ quản lý.
    
