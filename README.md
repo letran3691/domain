@@ -1,7 +1,12 @@
+## Mục lục.
+
+### [1 Lời nói đầu](#1)
+
+### [2. Cài đặt](#2)
 
 ### <a name="1"><a/>1. Đôi lời chia sẻ.
     
-  ####  - Khái niệm domain controller có sẽ đã quá quen thuộc với các bạn, nên mình cũng không cần giới thiệu thêm.
+ - Khái niệm domain controller có sẽ đã quá quen thuộc với các bạn, nên mình cũng không cần giới thiệu thêm.
   
   - Cũng đã khá lâu rồi mình không còn tiếp xúc với winserver đặc biệt là domain controller trên winserver. Tuy nhiên mình vẫn làm việc với domain controller nhưng ở trên nền linux(centos7). Hệ thống của mình không lớn (gần 100 user), nên mình cũng ảo hóa nó luôn. Không có bài viết nào đánh giá về
   khả năng chịu tải của **domain samba** được khoảng bao nhiêu user cả. Một hệ thống tầm 500-1k user thì mình không biết thế nào, nhưng theo đánh khá khách quan của mình thì tầm 100-200 user cho hoàn toàn tải ngon. Ở Việt Nam thì mình chưa thấy có doanh nghiệp nào chạy domain trên linux cả, có lẽ là
@@ -15,16 +20,10 @@
   - Và tất nhiên dùng đồ quản quyền nó vẫn hay hơn, đặc biết là khi gặp vấn đề thì sẽ có sự support từ chính nhà cung cấp điều này còn gì tuyệt vời hơn. Nhưng thực tế hiện này các bạn cũng đã thấy, khi gặp lỗi gần như chúng ta không liên hệ với Microsoft mà đi hỏi luôn ông google.
   - Nói ở trên là cái hay của bản quyền là như vậy, nhưng không phải **domain samba** không được support. Các bạn thử seach từ khóa **setup samba domain controller**, sẽ có khoảng > 700k kết quả trả về. Điều này cho thấy công đồng dùng domain trên linux không hề nhỏ chút nào.
   - Dĩ nhiên khi sử dụng domain trên linux các bạn sẽ không có support nào từ bất cứ hãng nào cả, mà là sự support từ công đồng. Các bạn đừng thấy mình nói vậy mà nản vì sao, đơn giản như mình đã nói ở trên khi các bạn dùng winserver gặp vấn đề có khi nào các bạn liên hệ với Microsoft không, Không không và không.
-  Việc đầu tiên các bạn làm đó là đi nhờ sự trợ giúp từ công đồng (google). Các lỗi mà các bạn gặp phải trong khi xây dựng và qlý domain trên linux, thì các chắc đã có người gặp rồi, vì các bạn không phải là người đầu tiên sử dụng nó. Cho nên gặp lỗi thì đã có công đồng support. 
- 
+  Việc đầu tiên các bạn làm đó là đi nhờ sự trợ giúp từ công đồng (google). Các lỗi mà các bạn gặp phải trong khi xây dựng và qlý domain trên linux, thì các chắc đã có người gặp rồi, vì các bạn không phải là người đầu tiên sử dụng nó. Cho nên gặp lỗi thì đã có công đồng support.
   
-  
-  Domain trên winserver thì không có gì mà phải chia sẻ cả, vì việc cấu hình nó quá đơn giải với việc thao tác trên giao diện đồ họa. Bài viết này của mình sẽ hướng dẫn mọi người cấu hình domain controller trên linux(centos7), hay có khái niệm khác là **domain samba comtroller**.
-  Việc tìm hiểu cài đặt và cấu hình nó chẳng hề đơn giản với những bạn mới bắt đầu tìm hiểu.
-  
-  
-
-#### Script được mình viết bằng python3
+   
+### <a name='2'><a/>2. Cài đặt.
 
 #### Để thực hiện việc cài đặt này yêu cầu 2 host làm domain controller phải được cài đặt python3.0 trở lên.
 
@@ -77,6 +76,10 @@ Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC
    - **Chú ý:** Các bạn tránh nhầm lẫn việc đặt hostname cho PDC vs BDC nhé, đây là 2 hostname cho 2 host các nhau không được đặt trùng.
    
    
+#### <a name=2.1><a/>2.1 Cài đặt-cấu hình domain 
+
+-  **Primary domain controller**
+   
    - sau khi cài đặt xong python3.6 giờ, giờ các bạn chạy file **PDC.py** để cấu hình primary domain controller
    
             python3.6 domain/PDC.py
@@ -87,25 +90,24 @@ Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC
    ![image](https://user-images.githubusercontent.com/19284401/57743834-e48a2c80-76f0-11e9-90bf-e96b1566bf3a.png)
 
    - Ở đây mình làm LAB nên mình lấy luôn IP từ DHCP cấp, trong thực tế các bạn nên đặt IP sao cho dễ quản lý.
+   
    - Nhập subnetmask chính xác với hệ thống mạng của các bạn 
+   
    - domain name: Là tên dommain sẽ được dựng trong hệ thống này.
+   
 - Sau khi nhập xong các thông tin trên script sẽ tự động cấu hình và restart lại network (các bạn chú ý giúp mình là file cấu hình card mạng cứ để mặc định khi mới cài đặt os nhé, tránh thay đổi dẫn đến việc file script cấu hình sai thông tin).
 
-- Quá trình cài đặt packet  và compile bắt đầu(việc này diễn ra nhanh hay chậm tùy thuộc vào cấu hình phần cứng của host).
+- Quá trình cài đặt packet và compile bắt đầu(việc này diễn ra nhanh hay chậm tùy thuộc vào cấu hình phần cứng của host).
 
-- mẹo nhỏ giúp các bạn ko phải trời đợi quá lâu khi PDC compile và install thì các bạn hay qua BDC thực hiện chạy file cài đặt.
+- Mẹo nhỏ giúp các bạn ko phải trờ đợi quá lâu khi PDC compile và install thì các bạn hãy qua BDC thực hiện chạy file cài đặt.
 
 **Chú ý**: Dể để PDC thực hiên compile xong khoảng hơn 2k/4k thì hay thực hiên các bước dưới đây, để đảm bảo quá trình cài đặt và cấu hình diễn ra đúng thứ tự.
         ![image](https://user-images.githubusercontent.com/19284401/57747163-819f9200-76fe-11e9-8380-bb034469b843.png)
 
-
-
-
-### Backup domain controller
+-  **Backup domain controller**
 
         python3.6 domain/BDC.py
-        
-        
+
 - Khi chạy file này các bạn cũng sẽ được yêu cầu nhập các thông tin cần thiết cho qua trình cấu hình.
     ![image](https://user-images.githubusercontent.com/19284401/57744478-94f93000-76f3-11e9-8d05-fda9231d7131.png)
 
@@ -115,9 +117,9 @@ Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC
  
     - Các bạn bạn nhập yes rồi nhập password của root bên PDC.
     
-- sau khi copy file hosts xong, quá trình dowload và cài đặt samba bắt đầu. thực hiên đến bước nào sẽ được in ra màn hình để các bạn nắm được.
+- Sau khi copy file hosts xong, quá trình dowload và cài đặt samba bắt đầu. thực hiên đến bước nào sẽ được in ra màn hình để các bạn nắm được.
 
-### quay lại PDC
+-  **Chuyển sang PDC**
 
 - Quá trình cài đặt samba hoàn tất các bạn sẽ có lời nhắc như trong hình
         ![image](https://user-images.githubusercontent.com/19284401/57746185-4a2ee680-76fa-11e9-8424-f26be70272f2.png)
@@ -130,116 +132,122 @@ Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC
         
 - Cấu hình xem các bạn sẽ nhận được thông báo sau.
         ![image](https://user-images.githubusercontent.com/19284401/57746221-777b9480-76fa-11e9-96a5-a08d2ef27561.png)
-### chuyển qua BDC.
+        
+- **Chuyển qua BDC.**
     
- - sau khi cài đặt samba xong thì nó sẽ hỏi yêu cầu bạn nhập password của Administrator domain mà bạn vừa nhập bên PDC.
-    ![image](https://user-images.githubusercontent.com/19284401/57746247-9712bd00-76fa-11e9-8fbb-dd7678853b0c.png)
+ - Sau khi cài đặt samba xong thì nó sẽ hỏi yêu cầu bạn nhập password của Administrator domain mà bạn vừa nhập bên PDC.
+     ![image](https://user-images.githubusercontent.com/19284401/57746247-9712bd00-76fa-11e9-8fbb-dd7678853b0c.png)
 
-    - nhập password xong nhấn Enter các bạn sẽ có 1 thông báo về thời gian hết hạn password của Administrator như trong hình và yêu cầu bạn nhập lại password admin lần nữa.
-    ![image](https://user-images.githubusercontent.com/19284401/57746330-ec4ece80-76fa-11e9-8af7-e2c0b6614af8.png)
+    - Nhập password xong nhấn Enter các bạn sẽ có 1 thông báo về thời gian hết hạn password của Administrator như trong hình và yêu cầu bạn nhập lại password admin lần nữa.
+     ![image](https://user-images.githubusercontent.com/19284401/57746330-ec4ece80-76fa-11e9-8af7-e2c0b6614af8.png)
     
     - Sau khi nhấp pasword lần 2 thì BDC sẽ thực hiện cấu hình và join vào domain vừa tạo từ PDC. Đồng thời sẽ có lời nhắc bạn sang PDC nhấn Enter.
     
         ![image](https://user-images.githubusercontent.com/19284401/57746453-77c85f80-76fb-11e9-99ee-174f674bb4d7.png)
         
-### sang PDC
+- **Sang PDC**
 
-sau khi nhấn Enter các bạn sẽ được yêu cầu nhập hostname của BDC.
+    - sau khi nhấn Enter các bạn sẽ được yêu cầu nhập hostname của BDC.
     ![image](https://user-images.githubusercontent.com/19284401/57747693-de9c4780-7700-11e9-8edb-956db4adb085.png)
         _- Chú ý: các bạn đừng để màn hình chờ nhập password quá lâu sẽ dễ đến mất kết nối và gây ra lỗi._
    
-   - các bạn nhập hostname -> yes > nhâp password root của BDC rồi Enter.
-   - Thông báo chuyển qua BDC để Enter
-#### sang BDC
-![image](https://user-images.githubusercontent.com/19284401/57747767-291dc400-7701-11e9-80c4-05156c705299.png)
-Chú ý: Hãy đợi xuất hiện thông báo **Enter to continue** thì hay Enter.
-sau khi Enter sẽ có yêu cầu bạn nhập password root PDC để copy file và thông báo chuyển qua PDC để Enter.
-![image](https://user-images.githubusercontent.com/19284401/57747887-a0535800-7701-11e9-975b-52f227a7b6b2.png)
+         - các bạn nhập hostname -> yes > nhâp password root của BDC rồi Enter.
+         
+         - Thông báo chuyển qua BDC để Enter
+   
+- **Sang BDC**
 
-### sang PDC
+    ![image](https://user-images.githubusercontent.com/19284401/57747767-291dc400-7701-11e9-80c4-05156c705299.png)
+    
+     - Chú ý: Hãy đợi xuất hiện thông báo **Enter to continue** thì hãy Enter.
+     
+    - Sau khi Enter sẽ có yêu cầu bạn nhập password root PDC để copy file và thông báo chuyển qua PDC để Enter.
+    ![image](https://user-images.githubusercontent.com/19284401/57747887-a0535800-7701-11e9-975b-52f227a7b6b2.png)
 
-sau khi Enter các bạn sẽ được yêu cầu nhập password admin domain và chuyển qua BDC để enter.
-![image](https://user-images.githubusercontent.com/19284401/57747968-0213c200-7702-11e9-88ed-663bfaa21353.png)
+- **Sang PDC**
 
-### sang BDC
-- Nhấn Enter các bạn sẽ thấy 1 bảng thông báo về việc đồng bộ dữ liệu giữa 2 DC và yêu cầu chuyển sang PDC để Enter. 
-![image](https://user-images.githubusercontent.com/19284401/57748059-7f3f3700-7702-11e9-8611-6dc010891a7b.png)
-![image](https://user-images.githubusercontent.com/19284401/57748102-b1509900-7702-11e9-8e79-5c021dfdffd9.png)
+    - Sau khi Enter các bạn sẽ được yêu cầu nhập password admin domain và chuyển qua BDC để enter.
+    ![image](https://user-images.githubusercontent.com/19284401/57747968-0213c200-7702-11e9-88ed-663bfaa21353.png)
 
-### sang PDC
-- Tương tự như ở BDC sẽ có 1 bảng thông báo về việc đông bộ giữa 2 DC và thông báo chuyển qua BDC để enter. Đồng thời host sẽ tự động reboot.
-![image](https://user-images.githubusercontent.com/19284401/57748334-b82bdb80-7703-11e9-9943-f93e84db6eb0.png)
-![image](https://user-images.githubusercontent.com/19284401/57748306-903c7800-7703-11e9-8094-0d95a3dad9c7.png)
+-  **Sang BDC**
+    - Nhấn Enter các bạn sẽ thấy 1 bảng thông báo về việc đồng bộ dữ liệu giữa 2 DC và yêu cầu chuyển sang PDC để Enter. 
+    ![image](https://user-images.githubusercontent.com/19284401/57748059-7f3f3700-7702-11e9-8611-6dc010891a7b.png)
+    ![image](https://user-images.githubusercontent.com/19284401/57748102-b1509900-7702-11e9-8e79-5c021dfdffd9.png)
 
+-  **Sang PDC**
+    - Tương tự như ở BDC sẽ có 1 bảng thông báo về việc đông bộ giữa 2 DC và thông báo chuyển qua BDC để enter. Đồng thời host sẽ tự động reboot.
+    ![image](https://user-images.githubusercontent.com/19284401/57748334-b82bdb80-7703-11e9-9943-f93e84db6eb0.png)
+    ![image](https://user-images.githubusercontent.com/19284401/57748306-903c7800-7703-11e9-8094-0d95a3dad9c7.png)
+    - Chú ý: Các bạn cần kiểm tra  phần  **0 consecutive failure(s)** để xem có xảy ra lỗi gì ko
 
-- Chú ý: Các bạn cần kiểm tra  phần  **0 consecutive failure(s)** để xem có xảy ra lỗi gì ko
+-  **Sang BDC**
 
-### sang BDC
-Enter host sẽ tự động reboot.
-![image](https://user-images.githubusercontent.com/19284401/57748368-e27d9900-7703-11e9-9110-93a42ce3d89c.png)
+    - Enter host sẽ tự động reboot.
+    ![image](https://user-images.githubusercontent.com/19284401/57748368-e27d9900-7703-11e9-9110-93a42ce3d89c.png)
 
-##### quá trình cài đặt và cấu hình domain đã xong
+    - Quá trình cài đặt và cấu hình domain đã xong
 
-### Test đồng bộ user giữa 2 DC
-- Hiển thị các user đang có trong domain.
+#### <a name=2.2><a/>2.2 Test đồng bộ
+
+   - Hiển thị các user đang có trong domain.
             
-            samba-tool user list
-            
-            
-   ![image](https://user-images.githubusercontent.com/19284401/57748820-ac411900-7705-11e9-9d83-0f00e4cc4dab.png)
+                 samba-tool user list
+                    
+        ![image](https://user-images.githubusercontent.com/19284401/57748820-ac411900-7705-11e9-9d83-0f00e4cc4dab.png)
     
     
-- Tạo user
+   - Tạo user
 
-            samba-tool user create test
-            
-    ![image](https://user-images.githubusercontent.com/19284401/57748845-d4c91300-7705-11e9-9220-4e7ddb8fac7a.png)
+                 samba-tool user create test
+                    
+        ![image](https://user-images.githubusercontent.com/19284401/57748845-d4c91300-7705-11e9-9220-4e7ddb8fac7a.png)
     
    Chú ý: phần nhập password mặc định vẫn là >7 ký tự và yêu cầu độ phực tạp nhé (123456a@)
    
- - Hiển thị các user đang có trong domain trên cả 2 DC.
+  - Hiển thị các user đang có trong domain trên cả 2 DC.
             
-            samba-tool user list
+                samba-tool user list
             
-      ![image](https://user-images.githubusercontent.com/19284401/57748943-41dca880-7706-11e9-8373-30af85935666.png)
+        ![image](https://user-images.githubusercontent.com/19284401/57748943-41dca880-7706-11e9-8373-30af85935666.png)
       
       
--  Đứng trên BDC để xóa user "test"   
+  -  Đứng trên BDC để xóa user "test"   
         
-        samba-tool user delete test
+              samba-tool user delete test
         
-![image](https://user-images.githubusercontent.com/19284401/57748989-72bcdd80-7706-11e9-80c9-c0e386193ac9.png)
+        ![image](https://user-images.githubusercontent.com/19284401/57748989-72bcdd80-7706-11e9-80c9-c0e386193ac9.png)
 
-- Kiểm tra lại đồng bộ giữa 2 DC
+  - Kiểm tra lại đồng bộ giữa 2 DC
 
-            samba-tool user list
+               samba-tool user list
 
- ![image](https://user-images.githubusercontent.com/19284401/57749029-9b44d780-7706-11e9-9d95-b4b98ddabc2b.png)
+    ![image](https://user-images.githubusercontent.com/19284401/57749029-9b44d780-7706-11e9-9d95-b4b98ddabc2b.png)
  
- - Ok như vậy là việc đồng bộ dữ liệu giữa 2 DC không có vấn đề gì. Giờ ta đi đến cấu hình DNS.
+    - Ok như vậy là việc đồng bộ dữ liệu giữa 2 DC không có vấn đề gì. Giờ ta đi đến cấu hình DNS.
  
-#### DNS 
+#### <a name=2.3><a/>2.3 Cấu hình DNS
 
 - Kiếm 1 con máy win clien nào đó join vào domain thôi.
 
-![image](https://user-images.githubusercontent.com/19284401/57749236-6e44f480-7707-11e9-9a55-2f5afec96ac9.png)
+     ![image](https://user-images.githubusercontent.com/19284401/57749236-6e44f480-7707-11e9-9a55-2f5afec96ac9.png)
 
 - Việc join clien vào domain thì mình ko cẩn phải nó thêm nữa 
-![image](https://user-images.githubusercontent.com/19284401/57749307-ba903480-7707-11e9-9a3c-c9d38999a6fd.png)
-![image](https://user-images.githubusercontent.com/19284401/57749685-48205400-7709-11e9-956e-8926ccb1d31a.png)
+        ![image](https://user-images.githubusercontent.com/19284401/57749307-ba903480-7707-11e9-9a3c-c9d38999a6fd.png)
+        ![image](https://user-images.githubusercontent.com/19284401/57749685-48205400-7709-11e9-956e-8926ccb1d31a.png)
 
 - Sau khi jon domain xong các bạn dowload RSAT về và cài đặt trên máy vừa join domain.
 
     https://www.microsoft.com/en-us/download/details.aspx?id=7887 (đây là cho win 7)
 
-- sau khi cài đặt xong các bạn vào **Turn Windows Features** để bật nó lên
+- Sau khi cài đặt xong các bạn vào **Turn Windows Features** để bật nó lên
     ![image](https://user-images.githubusercontent.com/19284401/57749898-30959b00-770a-11e9-8773-5e2f8e1e77b6.png)
     
-Sau đó vào
+- Sau đó vào
  
             Control Panel\System and Security\Administrative Tools
             
 - Mở DNS lên.
+
     ![image](https://user-images.githubusercontent.com/19284401/57750018-adc11000-770a-11e9-86a2-10660e19a6ef.png)
 
 - Hãy nhập domain vào sau đó nhấn ok    

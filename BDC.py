@@ -18,12 +18,13 @@ ip_dc2 = input('Enter ip Backup DC : ')
 print('\nExample Enter Netmask: 8 16 24')
 netmask = input('Enter Netmask : ')
 
-host_n = input('\nEnter hostname Backup DC: ')
+#host_n = input('\nEnter hostname Backup DC: ')
 
 print('\nExample domain : domain.local\n')
 domain = input('Enter domain :')
 
 print('\n'+'*'*40)
+
 ############ tach chuoi
 
 a = domain.split('.')[0]
@@ -36,11 +37,10 @@ host_pdc = input('Enter hostname Primary DC: ')
 
 
 print('*'*40)
-exit(0)
 
 host_n = subprocess.check_output('cat /etc/hostname',shell=True,universal_newlines=True)
 
-host =host_n.rstrip('\n')
+host = host_n.rstrip('\n')
 
 with open('/etc/hosts','a+') as f:
 
