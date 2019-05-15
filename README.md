@@ -4,10 +4,10 @@
 
 #### [1 Đôi lời chia sẻ](#1)
 #### [2. Cài đặt](#2)
-- [2.1 Cài đặt](#2.1)
-- [2.2 Cài đặt](#2.2)
-- [2.3 Cài đặt](#2.3)
-- [2.4 Cài đặt](#2.4)
+- [2.1 Cài đặt python3.6](#2.1)
+- [2.2 Cài đặt-cấu hình domain](#2.2)
+- [2.3 Test đồng bộ](#2.3)
+- [2.4 Cấu hình DNS](#2.4)
 #### [3 Tham khảo](#3)
 - [3.1 Liên hệ](#3.1)
 
@@ -34,7 +34,7 @@
    
 ### <a name='2'><a/>2. Cài đặt.
 
-#### <a name='2.1'><a/>2.1 Cài đặt.
+#### <a name='2.1'><a/>2.1 Cài đặt python3.6.
 
 - Để thực hiện việc cài đặt này yêu cầu 2 host làm domain controller phải được cài đặt python3.0 trở lên.
 
