@@ -86,42 +86,41 @@ Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC
             
             
    - Việc đầu tiên các bạn được hỏi là nhập IP, subnetmask cho Primary DC, và nhập tên domain
-   
-   ![image](https://user-images.githubusercontent.com/19284401/57743834-e48a2c80-76f0-11e9-90bf-e96b1566bf3a.png)
+        [image](https://user-images.githubusercontent.com/19284401/57743834-e48a2c80-76f0-11e9-90bf-e96b1566bf3a.png)
 
-   - Ở đây mình làm LAB nên mình lấy luôn IP từ DHCP cấp, trong thực tế các bạn nên đặt IP sao cho dễ quản lý.
+        - Ở đây mình làm LAB nên mình lấy luôn IP từ DHCP cấp, trong thực tế các bạn nên đặt IP sao cho dễ quản lý.
    
-   - Nhập subnetmask chính xác với hệ thống mạng của các bạn 
+        - Nhập subnetmask chính xác với hệ thống mạng của các bạn 
    
-   - domain name: Là tên dommain sẽ được dựng trong hệ thống này.
+        - domain name: Là tên dommain sẽ được dựng trong hệ thống này.
    
-- Sau khi nhập xong các thông tin trên script sẽ tự động cấu hình và restart lại network (các bạn chú ý giúp mình là file cấu hình card mạng cứ để mặc định khi mới cài đặt os nhé, tránh thay đổi dẫn đến việc file script cấu hình sai thông tin).
+   - Sau khi nhập xong các thông tin trên script sẽ tự động cấu hình và restart lại network (các bạn chú ý giúp mình là file cấu hình card mạng cứ để mặc định khi mới cài đặt os nhé, tránh thay đổi dẫn đến việc file script cấu hình sai thông tin).
 
-- Quá trình cài đặt packet và compile bắt đầu(việc này diễn ra nhanh hay chậm tùy thuộc vào cấu hình phần cứng của host).
+   - Quá trình cài đặt packet và compile bắt đầu(việc này diễn ra nhanh hay chậm tùy thuộc vào cấu hình phần cứng của host).
 
-- Mẹo nhỏ giúp các bạn ko phải trờ đợi quá lâu khi PDC compile và install thì các bạn hãy qua BDC thực hiện chạy file cài đặt.
+   - Mẹo nhỏ giúp các bạn ko phải trờ đợi quá lâu khi PDC compile và install thì các bạn hãy qua BDC thực hiện chạy file cài đặt.
 
-**Chú ý**: Dể để PDC thực hiên compile xong khoảng hơn 2k/4k thì hay thực hiên các bước dưới đây, để đảm bảo quá trình cài đặt và cấu hình diễn ra đúng thứ tự.
-        ![image](https://user-images.githubusercontent.com/19284401/57747163-819f9200-76fe-11e9-8380-bb034469b843.png)
+   **Chú ý**: Dể để PDC thực hiên compile xong khoảng hơn 2k/4k thì hay thực hiên các bước dưới đây, để đảm bảo quá trình cài đặt và cấu hình diễn ra đúng thứ tự.
+            ![image](https://user-images.githubusercontent.com/19284401/57747163-819f9200-76fe-11e9-8380-bb034469b843.png)
 
 -  **Backup domain controller**
 
         python3.6 domain/BDC.py
 
-- Khi chạy file này các bạn cũng sẽ được yêu cầu nhập các thông tin cần thiết cho qua trình cấu hình.
-    ![image](https://user-images.githubusercontent.com/19284401/57744478-94f93000-76f3-11e9-8d05-fda9231d7131.png)
+    - Khi chạy file này các bạn cũng sẽ được yêu cầu nhập các thông tin cần thiết cho qua trình cấu hình.
+        ![image](https://user-images.githubusercontent.com/19284401/57744478-94f93000-76f3-11e9-8d05-fda9231d7131.png)
 
 - BDC sẽ copy file hosts sang PDC
 
-   ![image](https://user-images.githubusercontent.com/19284401/57744450-78f58e80-76f3-11e9-85db-d3b8c943061b.png)
+    ![image](https://user-images.githubusercontent.com/19284401/57744450-78f58e80-76f3-11e9-85db-d3b8c943061b.png)
  
     - Các bạn bạn nhập yes rồi nhập password của root bên PDC.
     
-- Sau khi copy file hosts xong, quá trình dowload và cài đặt samba bắt đầu. thực hiên đến bước nào sẽ được in ra màn hình để các bạn nắm được.
+    - Sau khi copy file hosts xong, quá trình dowload và cài đặt samba bắt đầu. thực hiên đến bước nào sẽ được in ra màn hình để các bạn nắm được.
 
 -  **Chuyển sang PDC**
 
-- Quá trình cài đặt samba hoàn tất các bạn sẽ có lời nhắc như trong hình
+    - Quá trình cài đặt samba hoàn tất các bạn sẽ có lời nhắc như trong hình
         ![image](https://user-images.githubusercontent.com/19284401/57746185-4a2ee680-76fa-11e9-8424-f26be70272f2.png)
         
         - Realm: Các bạn để mặc định và nhấn Enter
@@ -130,20 +129,20 @@ Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC
         - DNS backend: Để mặc đinh và Enter
         - DNS forward: Nếu các bạn có DNS server riêng thì nhập IP của DNS server đó, còn không thì các bạn nhập IP của router có khả năng phần giải DNS public. Đơn giản hơn các bạn nhập 8.8.8.8
         
-- Cấu hình xem các bạn sẽ nhận được thông báo sau.
+    - Cấu hình xem các bạn sẽ nhận được thông báo sau.
         ![image](https://user-images.githubusercontent.com/19284401/57746221-777b9480-76fa-11e9-96a5-a08d2ef27561.png)
         
 - **Chuyển qua BDC.**
     
- - Sau khi cài đặt samba xong thì nó sẽ hỏi yêu cầu bạn nhập password của Administrator domain mà bạn vừa nhập bên PDC.
-     ![image](https://user-images.githubusercontent.com/19284401/57746247-9712bd00-76fa-11e9-8fbb-dd7678853b0c.png)
+    - Sau khi cài đặt samba xong thì nó sẽ hỏi yêu cầu bạn nhập password của Administrator domain mà bạn vừa nhập bên PDC.
+      ![image](https://user-images.githubusercontent.com/19284401/57746247-9712bd00-76fa-11e9-8fbb-dd7678853b0c.png)
 
     - Nhập password xong nhấn Enter các bạn sẽ có 1 thông báo về thời gian hết hạn password của Administrator như trong hình và yêu cầu bạn nhập lại password admin lần nữa.
      ![image](https://user-images.githubusercontent.com/19284401/57746330-ec4ece80-76fa-11e9-8af7-e2c0b6614af8.png)
     
     - Sau khi nhấp pasword lần 2 thì BDC sẽ thực hiện cấu hình và join vào domain vừa tạo từ PDC. Đồng thời sẽ có lời nhắc bạn sang PDC nhấn Enter.
     
-        ![image](https://user-images.githubusercontent.com/19284401/57746453-77c85f80-76fb-11e9-99ee-174f674bb4d7.png)
+      ![image](https://user-images.githubusercontent.com/19284401/57746453-77c85f80-76fb-11e9-99ee-174f674bb4d7.png)
         
 - **Sang PDC**
 
@@ -193,14 +192,14 @@ Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC
             
                  samba-tool user list
                     
-        ![image](https://user-images.githubusercontent.com/19284401/57748820-ac411900-7705-11e9-9d83-0f00e4cc4dab.png)
+     ![image](https://user-images.githubusercontent.com/19284401/57748820-ac411900-7705-11e9-9d83-0f00e4cc4dab.png)
     
     
    - Tạo user
 
                  samba-tool user create test
                     
-        ![image](https://user-images.githubusercontent.com/19284401/57748845-d4c91300-7705-11e9-9220-4e7ddb8fac7a.png)
+     ![image](https://user-images.githubusercontent.com/19284401/57748845-d4c91300-7705-11e9-9220-4e7ddb8fac7a.png)
     
    Chú ý: phần nhập password mặc định vẫn là >7 ký tự và yêu cầu độ phực tạp nhé (123456a@)
    
@@ -208,14 +207,14 @@ Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC
             
                 samba-tool user list
             
-        ![image](https://user-images.githubusercontent.com/19284401/57748943-41dca880-7706-11e9-8373-30af85935666.png)
+       ![image](https://user-images.githubusercontent.com/19284401/57748943-41dca880-7706-11e9-8373-30af85935666.png)
       
       
   -  Đứng trên BDC để xóa user "test"   
         
               samba-tool user delete test
         
-        ![image](https://user-images.githubusercontent.com/19284401/57748989-72bcdd80-7706-11e9-80c9-c0e386193ac9.png)
+      ![image](https://user-images.githubusercontent.com/19284401/57748989-72bcdd80-7706-11e9-80c9-c0e386193ac9.png)
 
   - Kiểm tra lại đồng bộ giữa 2 DC
 
@@ -232,8 +231,8 @@ Trong thử mục **domain** các bạn quan tâm cho mình 3 file **PDC.py, BDC
      ![image](https://user-images.githubusercontent.com/19284401/57749236-6e44f480-7707-11e9-9a55-2f5afec96ac9.png)
 
 - Việc join clien vào domain thì mình ko cẩn phải nó thêm nữa 
-        ![image](https://user-images.githubusercontent.com/19284401/57749307-ba903480-7707-11e9-9a3c-c9d38999a6fd.png)
-        ![image](https://user-images.githubusercontent.com/19284401/57749685-48205400-7709-11e9-956e-8926ccb1d31a.png)
+      ![image](https://user-images.githubusercontent.com/19284401/57749307-ba903480-7707-11e9-9a3c-c9d38999a6fd.png)
+      ![image](https://user-images.githubusercontent.com/19284401/57749685-48205400-7709-11e9-956e-8926ccb1d31a.png)
 
 - Sau khi jon domain xong các bạn dowload RSAT về và cài đặt trên máy vừa join domain.
 
