@@ -163,7 +163,7 @@ print('\nPrepare install.......\n')
 time.sleep(5)
 
 
-#os.system('yum  –y  install epel-release && yum –y update')
+os.system('yum  –y  install epel-release && yum –y update')
 
 #### install packet basic
 
