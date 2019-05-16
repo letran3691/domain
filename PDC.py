@@ -131,7 +131,7 @@ time.sleep(4)
 
 ##### install epel-release
 
-#os.system('yum -y install epel-release && yum update -y')
+os.system('yum -y install epel-release && yum update -y')
 
 #### install packets need for samba4
 
