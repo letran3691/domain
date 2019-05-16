@@ -25,7 +25,6 @@ with open('/etc/hosts','a+') as f:
    f.write('\n'+ ip +' '+ host+'.'+ domain +' '+host)
    f.close()
 
-exit(0)
 
 gw = os.popen("ip route |grep default | awk '{print $3}'").read()
 
