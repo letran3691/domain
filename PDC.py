@@ -30,7 +30,7 @@ gw = os.popen("ip route |grep default | awk '{print $3}'").read()
 
 ################################## config network interface
 
-
+#
 # def eth():
 #     a = os.path.exists('/sys/class/net/eth0')
 #     return a
@@ -61,7 +61,7 @@ gw = os.popen("ip route |grep default | awk '{print $3}'").read()
 #
 # ens_ = ens()
 # #print(bool(ens_))
-
+#
 # if os.path.exists('/sys/class/net/eth0') == True:
 #
 #
@@ -142,8 +142,6 @@ if  os.path.exists('/sys/class/net/')== True:
 
     b = err.split()
     c = (b[0])
-
-    print('ban that la vl')
 
     with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-'+str(c), inplace=True) as  f:
         for line in f:

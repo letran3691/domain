@@ -151,18 +151,18 @@ gw = os.popen("ip route |grep default | awk '{print $3}'").read()
 #         f1.write('\nDNS1=127.0.0.1')
 #         f1.write('\nDNS2=8.8.8.8')
 #         f1.close()
+
 ################################################################################################################
 
 if  os.path.exists('/sys/class/net/')== True:
 
-    err = subprocess.check_output('ls /sys/class/net/',shell=True,universal_newlines=True)
+    inf = subprocess.check_output('ls /sys/class/net/',shell=True,universal_newlines=True)
 
-    print(str(err))
+    print(str(inf))
 
-    b = err.split()
+    b = inf.split()
     c = (b[0])
 
-    print('ban that la vl')
 
     with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-'+str(c), inplace=True) as  f:
         for line in f:
@@ -170,7 +170,7 @@ if  os.path.exists('/sys/class/net/')== True:
             #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
     with open('/etc/sysconfig/network-scripts/ifcfg-ens33', 'a+') as f1:
-        f1.write('\nIPADDR=' + ip)
+        f1.write('\nIPADDR=' + ip_dc2)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
         f1.write('\nDNS1=127.0.0.1')
