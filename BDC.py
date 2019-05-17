@@ -150,7 +150,11 @@ elif bool(ens_ )== True:
         f1.close()
 
 else:
-    print("Dont't have interface")
+    print("ERROR!!! Dont't have interface\n")
+
+    err = subprocess.check_output('ls /sys/class/net/',shell=True,universal_newlines=True)
+
+    print(str(err))
 
     exit(0)
 

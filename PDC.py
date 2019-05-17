@@ -46,13 +46,13 @@ def ens():
     return a
 
 eno_ = eno()
-#print(bool(eno_))
+# #print(bool(eno_))
 
 eth_ = eth()
 #print(bool(eth_))
 
 em_ = em()
-#print(bool(em_))
+# print(bool(em_))
 
 ens_ = ens()
 #print(bool(ens_))
@@ -118,7 +118,12 @@ elif bool(ens_ )== True:
         f1.close()
 
 else:
-    print("Dont't have interface")
+    print("ERROR!!! Dont't have interface\n")
+
+    err = subprocess.check_output('ls /sys/class/net/',shell=True,universal_newlines=True)
+
+    print(str(err))
+
     exit(0)
 
 #### restart network
