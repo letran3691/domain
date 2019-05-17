@@ -177,6 +177,8 @@ time.sleep(4)
 
 os.system('yum -y install epel-release && yum update -y')
 
+print('update done!!!!')
+
 #### install packets need for samba4
 
 print('\nInstall packets need for samba4')
