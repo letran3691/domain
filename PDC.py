@@ -173,8 +173,6 @@ os.system('systemctl restart network')
 
 time.sleep(4)
 
-exit(0)
-
 ##### install epel-release
 
 os.system('yum -y install epel-release && yum update -y')
