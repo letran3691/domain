@@ -30,84 +30,122 @@ gw = os.popen("ip route |grep default | awk '{print $3}'").read()
 
 ################################## config network interface
 
-def eno():
-    a = os.path.exists('/sys/class/net/eno1')
 
-    return a
-def eth():
-    a = os.path.exists('/sys/class/net/eth0')
-    return a
+# def eth():
+#     a = os.path.exists('/sys/class/net/eth0')
+#     return a
+#
+# def eno():
+#     a = os.path.exists('/sys/class/net/eno1')
+#
+#     return a
+#
+# def em():
+#     a = os.path.exists('/sys/class/net/em1')
+#     return a
+# def ens():
+#     a = os.path.exists('/sys/class/net/ens33')
+#     return a
+#
+# def ens():
+#     a = os.path.exists('/sys/class/net/ens160')
+#     return a
+# eno_ = eno()
+# #print(bool(eno_))
+#
+# eth_ = eth()
+# #print(bool(eth_))
+#
+# em_ = em()
+# # print(bool(em_))
+#
+# ens_ = ens()
+# #print(bool(ens_))
 
-def em():
-    a = os.path.exists('/sys/class/net/em1')
-    return a
-def ens():
-    a = os.path.exists('/sys/class/net/ens33')
-    return a
+# if os.path.exists('/sys/class/net/eth0') == True:
+#
+#
+#
+#     with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-eth0', inplace=True, backup='.bak') as  f:
+#         for line in f:
+#             print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
+#             #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+#         f.close()
+#     with open('/etc/sysconfig/network-scripts/ifcfg-eth0', 'a+') as f1:
+#         f1.write('\nIPADDR=' + ip)
+#         f1.write('\nFREFIX=' + netmask)
+#         f1.write('\nGATEWAY=' + gw)
+#         f1.write('\nDNS1=127.0.0.1')
+#         f1.write('\nDNS2=8.8.8.8')
+#         f1.close()
+#
+# elif os.path.exists('/sys/class/net/eno1') == True:
+#
+#     with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-eno1', inplace=True, backup='.bak') as  f:
+#         for line in f:
+#             print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
+#             #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+#         f.close()
+#     with open('/etc/sysconfig/network-scripts/ifcfg-eno1','a+') as f1:
+#         f1.write('\nIPADDR='+ip)
+#         f1.write('\nFREFIX='+netmask)
+#         f1.write('\nGATEWAY='+gw)
+#         f1.write('\nDNS1=127.0.0.1')
+#         f1.write('\nDNS2=8.8.8.8')
+#         f1.close()
+#
+# elif os.path.exists('/sys/class/net/em1')== True:
+#
+#     with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-em1', inplace=True, backup='.bak') as  f:
+#         for line in f:
+#             print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
+#             #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+#         f.close()
+#     with open('/etc/sysconfig/network-scripts/ifcfg-em1', 'a+') as f1:
+#         f1.write('\nIPADDR=' + ip)
+#         f1.write('\nFREFIX=' + netmask)
+#         f1.write('\nGATEWAY=' + gw)
+#         f1.write('\nDNS1=127.0.0.1')
+#         f1.write('\nDNS2=8.8.8.8')
+#         f1.close()
+#
+# elif  os.path.exists('/sys/class/net/ens33')== True:
+#
+#     err = subprocess.check_output('ls /sys/class/net/',shell=True,universal_newlines=True)
+#
+#     print(str('interface name ',err))
+#
+#     a = input('Enter interface name:')
+#
+#     print('ban that la vl')
+#
+#     with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-'+a, inplace=True, backup='.bak') as  f:
+#         for line in f:
+#             print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
+#             #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
+#         f.close()
+#     with open('/etc/sysconfig/network-scripts/ifcfg-ens33', 'a+') as f1:
+#         f1.write('\nIPADDR=' + ip)
+#         f1.write('\nFREFIX=' + netmask)
+#         f1.write('\nGATEWAY=' + gw)
+#         f1.write('\nDNS1=127.0.0.1')
+#         f1.write('\nDNS2=8.8.8.8')
+#         f1.close()
 
-def ens():
-    a = os.path.exists('/sys/class/net/ens160')
-    return a
-eno_ = eno()
-#print(bool(eno_))
+###################################################################################################
 
-eth_ = eth()
-#print(bool(eth_))
+if  os.path.exists('/sys/class/net/')== True:
 
-em_ = em()
-# print(bool(em_))
+    err = subprocess.check_output('ls /sys/class/net/',shell=True,universal_newlines=True)
 
-ens_ = ens()
-#print(bool(ens_))
+    print(str(err))
 
-if bool(eth_) == True:
+    b = err.split()
+    c = (b[0])
 
-    with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-eth0', inplace=True, backup='.bak') as  f:
-        for line in f:
-            print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
-            #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
-        f.close()
-    with open('/etc/sysconfig/network-scripts/ifcfg-eth0', 'a+') as f1:
-        f1.write('\nIPADDR=' + ip)
-        f1.write('\nFREFIX=' + netmask)
-        f1.write('\nGATEWAY=' + gw)
-        f1.write('\nDNS1=127.0.0.1')
-        f1.write('\nDNS2=8.8.8.8')
-        f1.close()
+    print('ban that la vl')
 
-elif bool(eno_) == True:
-
-    with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-eno1', inplace=True, backup='.bak') as  f:
-        for line in f:
-            print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
-            #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
-        f.close()
-    with open('/etc/sysconfig/network-scripts/ifcfg-eno1','a+') as f1:
-        f1.write('\nIPADDR='+ip)
-        f1.write('\nFREFIX='+netmask)
-        f1.write('\nGATEWAY='+gw)
-        f1.write('\nDNS1=127.0.0.1')
-        f1.write('\nDNS2=8.8.8.8')
-        f1.close()
-
-elif bool(em_ )== True:
-
-    with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-em1', inplace=True, backup='.bak') as  f:
-        for line in f:
-            print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
-            #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
-        f.close()
-    with open('/etc/sysconfig/network-scripts/ifcfg-em1', 'a+') as f1:
-        f1.write('\nIPADDR=' + ip)
-        f1.write('\nFREFIX=' + netmask)
-        f1.write('\nGATEWAY=' + gw)
-        f1.write('\nDNS1=127.0.0.1')
-        f1.write('\nDNS2=8.8.8.8')
-        f1.close()
-
-elif bool(ens_ )== True:
-
-    with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-ens33', inplace=True, backup='.bak') as  f:
+    with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-'+str(c), inplace=True) as  f:
         for line in f:
             print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
             #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
@@ -136,6 +174,8 @@ print('Restart network')
 os.system('systemctl restart network')
 
 time.sleep(4)
+
+exit(0)
 
 ##### install epel-release
 
