@@ -45,8 +45,11 @@ def ens():
     a = os.path.exists('/sys/class/net/ens33')
     return a
 
+def ens():
+    a = os.path.exists('/sys/class/net/ens160')
+    return a
 eno_ = eno()
-# #print(bool(eno_))
+#print(bool(eno_))
 
 eth_ = eth()
 #print(bool(eth_))
