@@ -3,11 +3,11 @@
 import os,time,subprocess,fileinput
 
 
-with fileinput.FileInput('/etc/selinux/config', inplace=True,backup='.bak') as  f1:
-
-    for line in f1:
-       print(line.replace('SELINUX=enforcing','SELINUX=disabled'),end='')
-    f1.close()
+# with fileinput.FileInput('/etc/selinux/config', inplace=True,backup='.bak') as  f1:
+#
+#     for line in f1:
+#        print(line.replace('SELINUX=enforcing','SELINUX=disabled'),end='')
+#     f1.close()
 
 
 print('*'*40)
@@ -22,6 +22,8 @@ netmask = input('Enter Netmask : ')
 
 print('\nExample domain : domain.local\n')
 domain = input('Enter domain :')
+
+exit(0)
 
 print('\n'+'*'*40)
 
