@@ -46,7 +46,7 @@ if  os.path.exists('/sys/class/net/')== False:
             print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
         f.close()
 
-    with open('//etc/sysconfig/network-scripts/ifcfg-'+str(c), 'a+') as f1:
+    with open('/etc/sysconfig/network-scripts/ifcfg-'+str(c), 'a+') as f1:
         f1.write('\nIPADDR=' + ip)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
