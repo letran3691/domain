@@ -32,7 +32,7 @@ gw = os.popen("ip route |grep default | awk '{print $3}'").read()
 
 ###################################################################################################
 
-if  os.path.exists('/sys/class/net/')== False:
+if  os.path.exists('/sys/class/net/')== True:
 
     err = subprocess.check_output('ls /sys/class/net/',shell=True,universal_newlines=True)
 
