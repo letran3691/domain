@@ -23,8 +23,6 @@ netmask = input('Enter Netmask : ')
 print('\nExample domain : domain.local\n')
 domain = input('Enter domain :')
 
-exit(0)
-
 print('\n'+'*'*40)
 
 ############ tach chuoi
