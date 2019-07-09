@@ -188,11 +188,11 @@ input('\nEnter to continue.....')
 
 #############################################################################
 
-with open('/etc/resolv.conf','a+') as f3:
-    f3.write('search '+ domain )
-    f3.write('nameserver '+ ip)
-    f3.close()
-
+# with open('/etc/resolv.conf','a+') as f3:
+#     f3.write('search '+ domain )
+#     f3.write('nameserver '+ ip)
+#     f3.close()
+#
 # os.system('cd domain && cp krb5.conf /etc/ ')
 #
 # with fileinput.FileInput('/etc/krb5.conf', inplace=True, backup='.bak') as f4:
@@ -201,7 +201,7 @@ with open('/etc/resolv.conf','a+') as f3:
 #         print(line.replace('default_realm = domain.local', 'default_realm = '+ domain.upper()))
 #
 #     f4.close()
-# #
+
 # #### Checking the Kerberos ticket
 
 os.system('kinit administrator@'+domain.upper())
