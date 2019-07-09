@@ -30,108 +30,6 @@ gw = os.popen("ip route |grep default | awk '{print $3}'").read()
 
 ################################## config network interface
 
-#
-# def eth():
-#     a = os.path.exists('/sys/class/net/eth0')
-#     return a
-#
-# def eno():
-#     a = os.path.exists('/sys/class/net/eno1')
-#
-#     return a
-#
-# def em():
-#     a = os.path.exists('/sys/class/net/em1')
-#     return a
-# def ens():
-#     a = os.path.exists('/sys/class/net/ens33')
-#     return a
-#
-# def ens():
-#     a = os.path.exists('/sys/class/net/ens160')
-#     return a
-# eno_ = eno()
-# #print(bool(eno_))
-#
-# eth_ = eth()
-# #print(bool(eth_))
-#
-# em_ = em()
-# # print(bool(em_))
-#
-# ens_ = ens()
-# #print(bool(ens_))
-#
-# if os.path.exists('/sys/class/net/eth0') == True:
-#
-#
-#
-#     with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-eth0', inplace=True, backup='.bak') as  f:
-#         for line in f:
-#             print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
-#             #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
-#         f.close()
-#     with open('/etc/sysconfig/network-scripts/ifcfg-eth0', 'a+') as f1:
-#         f1.write('\nIPADDR=' + ip)
-#         f1.write('\nFREFIX=' + netmask)
-#         f1.write('\nGATEWAY=' + gw)
-#         f1.write('\nDNS1=127.0.0.1')
-#         f1.write('\nDNS2=8.8.8.8')
-#         f1.close()
-#
-# elif os.path.exists('/sys/class/net/eno1') == True:
-#
-#     with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-eno1', inplace=True, backup='.bak') as  f:
-#         for line in f:
-#             print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
-#             #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
-#         f.close()
-#     with open('/etc/sysconfig/network-scripts/ifcfg-eno1','a+') as f1:
-#         f1.write('\nIPADDR='+ip)
-#         f1.write('\nFREFIX='+netmask)
-#         f1.write('\nGATEWAY='+gw)
-#         f1.write('\nDNS1=127.0.0.1')
-#         f1.write('\nDNS2=8.8.8.8')
-#         f1.close()
-#
-# elif os.path.exists('/sys/class/net/em1')== True:
-#
-#     with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-em1', inplace=True, backup='.bak') as  f:
-#         for line in f:
-#             print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
-#             #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
-#         f.close()
-#     with open('/etc/sysconfig/network-scripts/ifcfg-em1', 'a+') as f1:
-#         f1.write('\nIPADDR=' + ip)
-#         f1.write('\nFREFIX=' + netmask)
-#         f1.write('\nGATEWAY=' + gw)
-#         f1.write('\nDNS1=127.0.0.1')
-#         f1.write('\nDNS2=8.8.8.8')
-#         f1.close()
-#
-# elif  os.path.exists('/sys/class/net/ens33')== True:
-#
-#     err = subprocess.check_output('ls /sys/class/net/',shell=True,universal_newlines=True)
-#
-#     print(str('interface name ',err))
-#
-#     a = input('Enter interface name:')
-#
-#     print('ban that la vl')
-#
-#     with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-'+a, inplace=True, backup='.bak') as  f:
-#         for line in f:
-#             print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
-#             #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
-#         f.close()
-#     with open('/etc/sysconfig/network-scripts/ifcfg-ens33', 'a+') as f1:
-#         f1.write('\nIPADDR=' + ip)
-#         f1.write('\nFREFIX=' + netmask)
-#         f1.write('\nGATEWAY=' + gw)
-#         f1.write('\nDNS1=127.0.0.1')
-#         f1.write('\nDNS2=8.8.8.8')
-#         f1.close()
-
 ###################################################################################################
 
 if  os.path.exists('/sys/class/net/')== True:
@@ -146,9 +44,9 @@ if  os.path.exists('/sys/class/net/')== True:
     with fileinput.FileInput('/etc/sysconfig/network-scripts/ifcfg-'+str(c), inplace=True) as  f:
         for line in f:
             print(line.replace('BOOTPROTO="dhcp"','BOOTPROTO=static'),end='')
-            #print(line.replace('ONBOOT="no"', 'ONBOOT=yes'))
         f.close()
-    with open('/etc/sysconfig/network-scripts/ifcfg-ens33', 'a+') as f1:
+
+    with open('/etc/sysconfig/network-scripts/ifcfg-'+str(c), 'a+') as f1:
         f1.write('\nIPADDR=' + ip)
         f1.write('\nFREFIX=' + netmask)
         f1.write('\nGATEWAY=' + gw)
@@ -159,7 +57,8 @@ if  os.path.exists('/sys/class/net/')== True:
 else:
     print("ERROR!!! Dont't have interface\n")
 
-    err = subprocess.check_output('ls /sys/class/net/',shell=True,universal_newlines=True)
+    #err = subprocess.check_output('ls /sys/class/net/',shell=True,universal_newlines=True)
+    err = os.listdir('/sys/class/net/')
 
     print(str(err))
 
@@ -289,11 +188,11 @@ input('\nEnter to continue.....')
 
 #############################################################################
 
-with open('/etc/resolv.conf','a+') as f3:
-    f3.write('search '+ domain )
-    f3.write('nameserver '+ ip)
-    f3.close()
-
+# with open('/etc/resolv.conf','a+') as f3:
+#     f3.write('search '+ domain )
+#     f3.write('nameserver '+ ip)
+#     f3.close()
+#
 # os.system('cd domain && cp krb5.conf /etc/ ')
 #
 # with fileinput.FileInput('/etc/krb5.conf', inplace=True, backup='.bak') as f4:
@@ -302,7 +201,7 @@ with open('/etc/resolv.conf','a+') as f3:
 #         print(line.replace('default_realm = domain.local', 'default_realm = '+ domain.upper()))
 #
 #     f4.close()
-# #
+
 # #### Checking the Kerberos ticket
 
 os.system('kinit administrator@'+domain.upper())

@@ -35,7 +35,7 @@ rm -f /usr/src/Python-3.6.8.tgz
 
 echo 'python3.6 -V'
 
-chmod -R +x /root/samba-domain/*.py
+chmod -R +x /root/domain/*.py
 
 echo "Enter hostname: "
 read server
