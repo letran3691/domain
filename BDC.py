@@ -21,7 +21,7 @@ netmask = input('Enter Netmask : ')
 #host_n = input('\nEnter hostname Backup DC: ')
 
 print('\nExample domain : domain.local\n')
-domain = input('Enter domain :')
+domain = input('Enter domain : ')
 
 print('\n'+'*'*40)
 

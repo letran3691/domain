@@ -125,7 +125,7 @@ with fileinput.FileInput('/etc/krb5.conf', inplace=True,backup='.bak') as  f2:
 
 #### domain provision
 
-print('\nPassword Administrator > 7 characters'.upper())
+print('\nPassword Administrator > 7 characters and complex'.upper())
 
 time.sleep(3)
 
@@ -176,7 +176,7 @@ host_bdc = input('\nEnter hostname Backup DC: ')
 os.system('scp -r /usr/local/samba/private/idmap.ldb.bak root@'+host_bdc+'.'+domain+':/usr/local/samba/private/idmap.ldb ')
 
 ############################################################################
-## remove file krb5.conf
+# remove file krb5.conf
 
 os.system('rm -f /etc/krb5.conf')
 
